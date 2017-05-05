@@ -12,7 +12,8 @@ a wrapper around clay to enforce rules, etc.
 Any large-scale edits should be done in vim or a similar editor.
 
 Ideally, everything should be accessible from command line, preferably as a 
-:talk-like console app.
+:talk-like console app. Probably would be easier to get a web interface going 
+first (weirdly).
 
 ## User stories
 + I want to start a board
@@ -23,17 +24,22 @@ Ideally, everything should be accessible from command line, preferably as a
 + I want to be updated when a board I subscribe to updates
 
 ## Issue format
++ Board
 + Title
 + Issue number
 + Body text (md)
 + Author
 + Subscribers?
 + Assignee
++ Phase
 + Tags
 
 ## Dev "plan"
 + Create new board
 + Create new issue
++ Update issue
+  - Change phase
+  - Change assignee
 + New issue on existing board
 + New issue on existing board
 + Define interface (Command line)
