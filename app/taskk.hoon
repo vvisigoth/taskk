@@ -9,9 +9,16 @@
 |%
   ++  card  {$info wire @p toro}                 :: card format for writing to clay
   ++  move  {bone card}                          ::
+  ++  phase
+      $?
+        $todo
+        $doin
+        $show
+        $done
+      ==
 ::  ++  issue                                    ::
 ::      $:                                       ::
-::        titl/@t                                ::
+::        tit/@t                                ::
 ::        des/@t                                 ::
 ::        aut/@p                                 ::
 ::        :lin/purl                              ::
