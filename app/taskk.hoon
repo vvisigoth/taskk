@@ -30,11 +30,12 @@
 |_  {hid/bowl state/$~}                          ::
 ++  poke-test                                    ::
   |=  $:
-        boar/@t 
-        titl/@t 
-        desc/@t 
+        boa/@t 
+        tit/@t 
+        des/@t 
+        pha/phase
         aut/@p 
-        phas/@ud
+        ass/@p
       ==                                         ::
   =|  txt/@t
   ^-  {(list move) _+>.$}
@@ -44,10 +45,11 @@
     """
     ---
     author: {<aut>}
+    assignee: {<ass>}
     ---
-    #{(trip titl)}
+    #{(trip tit)}
 
-    {(trip desc)}
+    {(trip des)}
     """
   [[[ost.hid %info /writing our.hid (foal pax [%md !>(txt)])] ~] +>.$]
 :: not tested yet, put in test logic.
