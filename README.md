@@ -39,8 +39,8 @@ first (weirdly).
 ## Dev "plan"
 - [x] Create new board
 - [x] Create new issue
-- [] Change issue phase
-- [] Change assignee
-+ [] New issubscriptions
-+ [] issue subscriptions
+- [ ] Change issue phase
+- [ ] Change assignee
++ [ ] New issubscriptions
++ [ ] issue subscriptions
 
