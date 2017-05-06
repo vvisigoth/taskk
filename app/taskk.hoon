@@ -39,7 +39,7 @@
       ==                                         ::
   =|  txt/@t
   ^-  {(list move) _+>.$}
-  =+  pax=%/(scot %t boar)/(scot %ud phas)/(cat 3 (scot %da now.hid) '~')/md
+  =+  pax=%/(scot %t boa)/(scot %t pha)/(scot %da now.hid)/md
   =.  txt
     %-  crip
     """
