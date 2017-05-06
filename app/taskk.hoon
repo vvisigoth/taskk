@@ -28,7 +28,7 @@
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
-++  poke-noun                                    ::
+++  poke-test                                    ::
   |=  $:
         boar/@t 
         titl/@t 
@@ -50,4 +50,11 @@
     {(trip desc)}
     """
   [[[ost.hid %info /writing our.hid (foal pax [%md !>(txt)])] ~] +>.$]
+:: not tested yet, put in test logic.
+++  poke-noun
+  |=  {inp/path out/path}
+  ^-  {(list move) _+>.$}
+  :: Maybe catch an error here
+  =+  cd=[%info /writing our.hid (foal out [%md !>(.^(* %cx inp))])]
+  [[[ost.hid cd] ~] +>.$]
 --
