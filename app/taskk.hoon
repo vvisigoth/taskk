@@ -19,6 +19,8 @@
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
+:: keep renaming this arms for testing, pay no heed
+:: create a md file with the issue template
 ++  poke-css                                     ::
   |=  $:
         boa/@t                                   :: board name
@@ -48,32 +50,7 @@
       our.hid
       (foal pax [%md !>(txt)])
   [[[ost.hid ca] ~] +>.$]
-::
-++  copy
-  |=  {inp/path out/path}
-  =|  cd/card
-  :: Maybe catch an error here
-  =.  cd
-    :*
-      %info 
-      /copying 
-      our.hid 
-      (foal out [%md !>(.^(* %cx inp))])
-    ==
-  [[[ost.hid cd] ~] +>.$]
-:: Remove a file at a location
-++  remove
-  |=  inp/path
-  =|  cad/card
-  :: Maybe catch an error here
-  =.  cad
-    :*
-      %info 
-      /removing 
-      our.hid 
-      (fray inp)
-    ==
-  [[[ost.hid cad] ~] +>.$]
+::  move file 
 ++  poke-noun
   |=  {inp/path out/path}
   =|  car/card
