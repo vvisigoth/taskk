@@ -19,7 +19,7 @@
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
-++  poke-test                                    ::
+++  poke-css                                     ::
   |=  $:
         boa/@t                                   :: board name
         tit/@t                                   :: issue title
@@ -71,4 +71,16 @@
       (fray inp)
     ==
   [[[ost.hid cad] ~] +>.$]
+++  poke-noun
+  |=  {inp/path out/path}
+  =|  car/card
+  =.  car
+    :^
+      %info
+      /moving
+      our.hid
+      %+  furl
+        (fray inp)
+        (foal out [%md !>(.^(* %cx inp))])
+  [[[ost.hid car] ~] +>.$]
 --
