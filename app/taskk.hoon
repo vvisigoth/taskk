@@ -67,4 +67,18 @@
       (foal out [%md !>(.^(* %cx inp))])
     ==
   [[[ost.hid cd] ~] +>.$]
+:: Remove a file at a location
+++  remove
+  |=  inp/path
+  =|  cad/card
+  ^-  {(list move) _+>.$}
+  :: Maybe catch an error here
+  =.  cad
+    :*
+      %info 
+      /removing 
+      our.hid 
+      (fray inp)
+    ==
+  [[[ost.hid cad] ~] +>.$]
 --
