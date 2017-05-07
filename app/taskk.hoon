@@ -51,12 +51,20 @@
 
     {(trip des)}
     """
-  [[[ost.hid %info /writing our.hid (foal pax [%md !>(txt)])] ~] +>.$]
-:: not tested yet, put in test logic.
-++  poke-noun
+  :-
+    [[ost.hid %info /writing our.hid (foal pax [%md !>(txt)])] ~] 
+    +>.$
+++  copy
   |=  {inp/path out/path}
+  =|  cd/card
   ^-  {(list move) _+>.$}
   :: Maybe catch an error here
-  =+  cd=[%info /writing our.hid (foal out [%md !>(.^(* %cx inp))])]
+  =.  cd
+    :*
+      %info 
+      /copying 
+      our.hid 
+      (foal out [%md !>(.^(* %cx inp))])
+    ==
   [[[ost.hid cd] ~] +>.$]
 --
