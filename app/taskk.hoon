@@ -16,29 +16,19 @@
         $show
         $done
       ==
-::  ++  issue                                    ::
-::      $:                                       ::
-::        tit/@t                                ::
-::        des/@t                                 ::
-::        aut/@p                                 ::
-::        :lin/purl                              ::
-::        :ass/@p                                ::
-::        pha/@tas                               ::
-::      ==                                       ::
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
 ++  poke-test                                    ::
   |=  $:
-        boa/@t 
-        tit/@t 
-        des/@t 
-        pha/phase
-        aut/@p 
-        ass/@p
-      ==                                         ::
-  =|  txt/@t
-  ^-  {(list move) _+>.$}
+        boa/@t                                   :: board name
+        tit/@t                                   :: issue title
+        des/@t                                   :: issue description
+        pha/phase                                :: issue phase
+        aut/@p                                   :: issue author
+        ass/@p                                   :: issue assignee
+      ==                                         
+  =|  {txt/@t ca/card}
   =+  pax=%/(scot %t boa)/(scot %t pha)/(scot %da now.hid)/md
   =.  txt
     %-  crip
