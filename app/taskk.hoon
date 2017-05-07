@@ -41,13 +41,17 @@
 
     {(trip des)}
     """
-  :-
-    [[ost.hid %info /writing our.hid (foal pax [%md !>(txt)])] ~] 
-    +>.$
+  =.  ca
+    :^
+      %info
+      /writing
+      our.hid
+      (foal pax [%md !>(txt)])
+  [[[ost.hid ca] ~] +>.$]
+::
 ++  copy
   |=  {inp/path out/path}
   =|  cd/card
-  ^-  {(list move) _+>.$}
   :: Maybe catch an error here
   =.  cd
     :*
@@ -61,7 +65,6 @@
 ++  remove
   |=  inp/path
   =|  cad/card
-  ^-  {(list move) _+>.$}
   :: Maybe catch an error here
   =.  cad
     :*
