@@ -5,17 +5,11 @@
   ::
   ::
   ::
-  ::
+/?    310
+/-  taskk-phase
 |%
   ++  card  {$info wire @p toro}                 :: card format for writing to clay
   ++  move  {bone card}                          ::
-  ++  phase
-      $?
-        $todo
-        $doin
-        $show
-        $done
-      ==
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
