@@ -5,7 +5,7 @@
   ::
   ::
   ::
-/?    310
+  ::
 |%
   ++  card  {$info wire @p toro}                 :: card format for writing to clay
   ++  move  {bone card}                          ::
