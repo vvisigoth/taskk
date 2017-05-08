@@ -15,15 +15,8 @@
 |_  {hid/bowl state/$~}                          ::
 :: keep renaming this arms for testing, pay no heed
 :: create a md file with the issue template
-++  poke-css                                     ::
-  |=  $:
-        boa/@t                                   :: board name
-        tit/@t                                   :: issue title
-        des/@t                                   :: issue description
-        pha/phase                                :: issue phase
-        aut/@p                                   :: issue author
-        ass/@p                                   :: issue assignee
-      ==                                         
+++  poke-taskk-issue                                   ::
+  |=  {boa/@t tit/@t des/@t pha/taskk-phase aut/@p ass/@p}
   =|  {txt/@t ca/card}
   =+  pax=%/(scot %t boa)/(scot %t pha)/(scot %da now.hid)/md
   =.  txt
@@ -45,6 +38,7 @@
       (foal pax [%md !>(txt)])
   [[[ost.hid ca] ~] +>.$]
 ::  move file 
+::
 ++  poke-noun
   |=  {inp/path out/path}
   =|  car/card
