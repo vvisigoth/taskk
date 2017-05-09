@@ -1,0 +1,40 @@
+body
+{
+  margin: 0;
+}
+
+div.column 
+{
+  width: calc(25% - 10px);
+  border-left: black 10px solid;
+  border-bottom: black 10px solid;
+  float: left;
+}
+
+div#done
+{
+  width: calc(25% - 20px);
+  border-right: black 10px solid;
+}
+
+div.tile
+{
+  border-top: black 10px solid;
+  padding: 10px;
+}
+
+div.one
+{
+  height: 100px;
+}
+
+div.two
+{
+  height: 200px;
+}
+
+div.three
+{
+  height: 300px;
+}
+
