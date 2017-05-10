@@ -1,8 +1,8 @@
-::  Accepts any noun from dojo and saves it in an md file
+::
+::
 ::
 ::::  
   ::  
-  ::
   ::
   ::
 /?    310
@@ -13,10 +13,17 @@
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
-:: keep renaming this arms for testing, pay no heed
 :: create a md file with the issue template
-++  poke-taskk-issue                                   ::
-  |=  {boa/@t tit/@t des/@t pha/taskk-phase aut/@p ass/@p}
+++  poke-taskk-issue                             ::
+  |= 
+    $*
+      boa/@t
+      tit/@t
+      des/@t
+      pha/taskk-phase
+      aut/@p
+      ass/@p
+    ==
   =|  {txt/@t ca/card}
   =+  pax=%/(scot %t boa)/(scot %t pha)/(scot %da now.hid)/md
   =.  txt
@@ -38,11 +45,11 @@
       (foal pax [%md !>(txt)])
   [[[ost.hid ca] ~] +>.$]
 ::  move file 
-::
+::  used for changing board phase
 ++  poke-noun
   |=  {inp/path out/path}
-  =|  car/card
-  =.  car
+  =|  ca/card
+  =.  ca
     :^
       %info
       /moving
@@ -50,5 +57,37 @@
       %+  furl
         (fray inp)
         (foal out [%md !>(.^(* %cx inp))])
-  [[[ost.hid car] ~] +>.$]
+  [[[ost.hid ca] ~] +>.$]
+:: useful for test
+++  poke-path
+  |=  inp/path
+  ~&  [%path inp]
+  ~&  [%crawled-path (crawl-path inp)]
+  [[~] +>.$]
+:: refactor this?
+++  crawl-path
+  |=  pax/path
+  |-  ^-  json
+  =+  a=.^(arch cy+pax)
+  ?~  fil.a
+    :-  %a
+      %+  turn
+        (sort (~(tap by dir.a)) aor)
+        |=  {p/@t $~}
+          [%a [[%s p] (crawl-path (welp pax /[p])) ~]]
+  =+  txt=.^(@t cx+pax)
+  [%s txt]
+::  subscribe to taskk
+++  peer-sub-path
+  |=  arg/*
+  =|  {jon/json pax/path}
+  =.  pax  
+    :: tried to use case 0, but didn't work?
+    /==/(scot %da now.hid)/app/taskk/~~board     ::this should come from app
+  =.  jon
+    %+
+      joba 
+      'issues'
+      (crawl-path pax)
+  [[[ost.hid %diff %json jon] ~] +>.$]
 --
