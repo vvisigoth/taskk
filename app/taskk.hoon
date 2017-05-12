@@ -5,10 +5,20 @@
   ::  
   ::
   ::
+  :: Front End Actions
+  :: - Create issue
+  :: - delete issue
+  :: - edit issue body
+  :: - edit issue phase
+  :: - edit issue phase
+  ::
 /?    310
 /-  taskk-phase
 |%
-  ++  card  {$info wire @p toro}                 :: card format for writing to clay
+  ++  card  
+    $%  {$info wire @p toro}             
+        {$diff mark *}
+    ==
   ++  move  {bone card}                          ::
 --                                               ::
 !:                                               ::
