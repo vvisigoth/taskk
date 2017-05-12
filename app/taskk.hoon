@@ -72,9 +72,47 @@
 ++  poke-path
   |=  inp/path
   ~&  [%path inp]
-  ~&  [%crawled-path (crawl-path inp)]
-  [[~] +>.$]
-:: refactor this?
+  =|  jon/json
+  =.  jon
+    %+  joba
+    'board'
+    (crawl-path inp)
+  [[[ost.hid %diff %json jon] ~] +>.$]
+::
+++  create-path
+::
+  |=  {host/@t board/@t phase/(unit @t) issue/(unit @t)}
+  :: there's no circumstance where there's an issue w/out phase, so maybe make these one 
+  :: data structure? phiss?
+  ^-  path
+  ?~  phase
+    /(scot %tas host)/home/(scot %da now.hid)/app/taskk/(scot %tas board)
+  /(scot %tas host)/home/(scot %da now.hid)/app/taskk/(scot %tas board)/(scot %tas (need phase))/(scot %tas (need issue))/md
+::
+++  poke-json
+  |=  jin/json
+  ^-  (quip move +>.$)
+  ?.  ?=($o -.jin)
+    [[[ost.hid %diff %json ~] ~] +>.$]
+  :: map this whole thing
+  =/  h  (~(got by p.jin) 'host')
+  =/  b  (~(got by p.jin) 'board')
+  =/  i  (~(got by p.jin) 'issue')
+  =/  ph  (~(got by p.jin) 'phase')
+  =/  hi  ?:  ?=($s -.h)  p.h  ~
+  =/  bi  ?:  ?=($s -.b)  p.b  ~
+  =/  ii  ?:  ?=($s -.i)  p.i  ~
+  =/  phi  ?:  ?=($s -.ph)  p.ph  ~
+  ::=/  pax  (create-path [`@t`hi `@t`bi [~ `@t`phi] [~ `@t`ii]])
+  =/  pax  (create-path [`@t`hi `@t`bi ~ ~])
+  ~&  pax
+  =/  jout  (crawl-path pax)
+  :_  +>.$
+  %+  turn  (prey /sub-path hid)
+    |=  {o/bone *}
+    [o %diff %json jout]
+::
+::
 ++  crawl-path
   |=  pax/path
   |-  ^-  json
