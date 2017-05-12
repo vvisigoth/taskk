@@ -126,16 +126,16 @@
   =+  txt=.^(@t cx+pax)
   [%s txt]
 ::  subscribe to taskk
+::
 ++  peer-sub-path
   |=  arg/*
-  =|  {jon/json pax/path}
-  =.  pax  
+  =|  jon/json
+    ::
     :: tried to use case 0, but didn't work?
-    /==/(scot %da now.hid)/app/taskk/~~board     ::this should come from app
   =.  jon
     %+
       joba 
-      'issues'
-      (crawl-path pax)
+      'connected'
+      (jape "success")
   [[[ost.hid %diff %json jon] ~] +>.$]
 --
