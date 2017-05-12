@@ -26,7 +26,7 @@
 :: create a md file with the issue template
 ++  poke-taskk-issue                             ::
   |= 
-    $*
+    $:
       boa/@t
       tit/@t
       des/@t
