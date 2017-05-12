@@ -56,7 +56,7 @@
   [[[ost.hid ca] ~] +>.$]
 ::  move file 
 ::  used for changing board phase
-++  poke-noun
+++  change-phase
   |=  {inp/path out/path}
   =|  ca/card
   =.  ca
