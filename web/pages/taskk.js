@@ -137,4 +137,10 @@ $(function() {
       });
     }
   )
+  window.urb.send({
+      action: 'request-board',
+      host: '~rosfet-ronlyn-mirdel-sillev--satnes-haphul-habryg-loppeg',
+      board: 'testproj'
+  });
+
 })
