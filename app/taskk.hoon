@@ -23,25 +23,41 @@
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
-:: create a md file with the issue template
-++  poke-taskk-issue                             ::
-  |= 
-    $:
-      boa/@t
-      tit/@t
-      des/@t
-      pha/taskk-phase
-      aut/@p
-      ass/@p
-    ==
-  =|  {txt/@t ca/card}
-  =+  pax=%/(scot %t boa)/(scot %t pha)/(scot %da now.hid)/md
-  =.  txt
+::  write json
+++  create-issue
+  :: take json from request
+  |=  jon/json
+  ^-  (list move)
+  =|  {pax/path ca/card}
+  ?.  ?=($o -.jon)
+    :: TODO return an error instead 
+    [[ost.hid %diff %json ~] ~]
+    ::
+  =/  ho  (~(got by p.jon) 'host')
+  =/  hos  ?:  ?=($s -.ho)  p.ho  ~
+  =/  bo  (~(got by p.jon) 'board')
+  =/  boa  ?:  ?=($s -.bo)  p.bo  ~
+  =/  ph  (~(got by p.jon) 'phase')
+  =/  pha  ?:  ?=($s -.ph)  p.ph  ~
+  =/  ti  (~(got by p.jon) 'title')
+  =/  tit  ?:  ?=($s -.ti)  p.ti  ~
+  =/  de  (~(got by p.jon) 'description')
+  =/  des  ?:  ?=($s -.de)  p.de  ~
+  =/  au  (~(got by p.jon) 'author')
+  =/  aut  ?:  ?=($s -.au)  p.au  ~
+  =/  as  (~(got by p.jon) 'assignee')
+  =/  ass  ?:  ?=($s -.as)  p.as  ~
+  =.  pax 
+    ::/(scot %tas hi)/=/app/taskk/(scot %tas bi)/(scot %tas phi)/(scot %da now.hid)/json
+    :: for right now, only write to our urbit
+    %/(scot %tas boa)/(scot %tas pha)/(scot %da now.hid)/md
+  =/  txt
     %-  crip
     """
     ---
     author: {<aut>}
     assignee: {<ass>}
+    title: {<tit>}
     ---
     #{(trip tit)}
 
@@ -53,12 +69,33 @@
       /writing
       our.hid
       (foal pax [%md !>(txt)])
-  [[[ost.hid ca] ~] +>.$]
-::  move file 
+  :: it would be cool to have a confirmation response move, too
+  ::
+  [[ost.hid ca] ~]
 ::  used for changing board phase
+::
 ++  change-phase
-  |=  {inp/path out/path}
-  =|  ca/card
+  |=  jon/json
+  =|  {inp/path out/path ca/card}
+  ^-  (list move)
+  ?.  ?=($o -.jon)
+    :: TODO return an error instead 
+    [[ost.hid %diff %json ~] ~]
+    ::
+  =/  ho  (~(got by p.jon) 'host')
+  =/  hos  ?:  ?=($s -.ho)  p.ho  ~
+  =/  bo  (~(got by p.jon) 'board')
+  =/  boa  ?:  ?=($s -.bo)  p.bo  ~
+  =/  is  (~(got by p.jon) 'issue')
+  =/  iss  ?:  ?=($s -.is)  p.is  ~
+  =/  phn  (~(got by p.jon) 'from-phase')
+  =/  phan  ?:  ?=($s -.phn)  p.phn  ~
+  =/  pht  (~(got by p.jon) 'to-phase')
+  =/  phat  ?:  ?=($s -.pht)  p.pht  ~
+  =.  inp
+    /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phan)/(scot %tas iss)/md
+  =.  out
+    /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phat)/(scot %tas iss)/md
   =.  ca
     :^
       %info
@@ -67,20 +104,39 @@
       %+  furl
         (fray inp)
         (foal out [%md !>(.^(* %cx inp))])
-  [[[ost.hid ca] ~] +>.$]
-:: useful for test
-++  poke-path
-  |=  inp/path
-  ~&  [%path inp]
-  =|  jon/json
-  =.  jon
-    %+  joba
-    'board'
-    (crawl-path inp)
-  [[[ost.hid %diff %json jon] ~] +>.$]
+  [[ost.hid ca] ~]
+::  request a board
+++  request-board
+  |=  jon/json
+  ^-  (list move)
+  =|  car/card
+  ?.  ?=($o -.jon)
+    [[ost.hid %diff %json ~] ~]
+    :::+
+    ::  %diff
+    ::  %json 
+    ::%+
+    ::  joba 
+    ::  'error'
+    ::  (jape "problem")
+  :: map this whole thing
+  =/  h  (~(got by p.jon) 'host')
+  =/  b  (~(got by p.jon) 'board')
+  =/  hi  ?:  ?=($s -.h)  p.h  ~
+  =/  bi  ?:  ?=($s -.b)  p.b  ~
+  =/  pax  (create-path [`@t`hi `@t`bi ~ ~])
+  =.  car
+    :+
+      %diff
+      %json
+      (crawl-path pax)
+  ~&  car
+  %+  turn  (prey /sub-path hid)
+    |=  {o/bone *}
+    [o car]
 ::
+::  request an issue
 ++  create-path
-::
   |=  {host/@t board/@t phase/(unit @t) issue/(unit @t)}
   :: there's no circumstance where there's an issue w/out phase, so maybe make these one 
   :: data structure? phiss?
