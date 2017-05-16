@@ -24,9 +24,36 @@ div.tile
   border-left: black 10px solid;
   border-top: black 10px solid;
   padding: 10px;
+  cursor: pointer;
 }
 
-div#done > div.tile
+div.tile .tile-container
+{
+  float: left;
+  display: block;
+}
+
+div.tile .indicator
+{
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  background-color: black;
+  float: right;
+  display: none;
+}
+
+div.tile.active .indicator
+{
+  display: block;
+}
+
+div.tile.bottom
+{
+  border-bottom: black 10px solid;
+}
+
+div#col3 > div.tile
 {
   width: calc(100% - 40px);
   border-right: black 10px solid;
@@ -47,25 +74,28 @@ div.three
   height: 300px;
 }
 
-div.tile > .title
+div.tile .title
 {
   text-transform: uppercase;
 }
-div.tile > .description
+div.tile .description
 {
   font-family: scp;
   width: calc(100% - 30px);
   height: calc(100% - 60px);
   padding: 10px;
   background-color: whitesmoke;
+  white-space: pre;
+  overflow: hidden;
+  margin-top: 40px;
 }
 
-div#done > div.tile > div.description
+div#col3 > div.tile div.description
 {
   width: calc(100% - 20px);
 }
 
-div.tile > .assignee
+div.tile .assignee
 {
   display: none;
 }

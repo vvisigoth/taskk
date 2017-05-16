@@ -10,113 +10,17 @@
   ==
   ;body
     ;div#cont
-      ;div#todo(class "column")
-        ;div(class "headlet"): TODO
-        ;div(class "tile one")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile three")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile two")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile one")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
+      ;div#col0(class "column")
+        ;div(class "col-container");
       ==
-      ;div#doin(class "column")
-        ;div(class "headlet"): DOIN
-        ;div(class "tile two")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile three")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile one")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile two")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
+      ;div#col1(class "column")
+        ;div(class "col-container");
       ==
-      ;div#show(class "column") 
-        ;div(class "headlet"): SHOW
-        ;div(class "tile three")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile two")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile two")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile two")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
+      ;div#col2(class "column")
+        ;div(class "col-container");
       ==
-      ;div#done(class "column")
-        ;div(class "headlet"): DONE
-        ;div(class "tile one")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile three")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile one")
-          ;div(class "title"): This
-          ;div(class "author"): ~ferwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
-        ;div(class "tile three")
-          ;div(class "title"): This
-          ;div(class "author"): ~fepwyp
-          ;div(class "description"): Description
-          ;div(class "assignee"): ~fipwep
-        ==
+      ;div#col3(class "column")
+        ;div(class "col-container");
       ==
     ==
     ;script(type "text/javascript", src "/pages/taskk.js");
