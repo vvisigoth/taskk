@@ -1,3 +1,7 @@
+//TODO
+//- move on back end
+//- good answer for phase name
+//- animate tile slide
 $(function() {
 
   var issueTemplate = '<div class="tile">' +

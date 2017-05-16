@@ -1,19 +1,16 @@
 ::
 ::
-::
 ::::  
-  ::  
   ::
   ::
   :: Front End Actions
   :: - Create issue
-  :: - delete issue
+  :: - Get all issues
   :: - edit issue body
   :: - edit issue phase
-  :: - edit issue phase
+  :: - delete issue
   ::
 /?    310
-/-  taskk-phase
 |%
   ++  card  
     $%  {$info wire @p toro}             
@@ -148,26 +145,22 @@
 ++  poke-json
   |=  jin/json
   ^-  (quip move +>.$)
+  =|  {jout/json mo/(list move)}
   ?.  ?=($o -.jin)
-    [[[ost.hid %diff %json ~] ~] +>.$]
-  :: map this whole thing
-  =/  h  (~(got by p.jin) 'host')
-  =/  b  (~(got by p.jin) 'board')
-  =/  i  (~(got by p.jin) 'issue')
-  =/  ph  (~(got by p.jin) 'phase')
-  =/  hi  ?:  ?=($s -.h)  p.h  ~
-  =/  bi  ?:  ?=($s -.b)  p.b  ~
-  =/  ii  ?:  ?=($s -.i)  p.i  ~
-  =/  phi  ?:  ?=($s -.ph)  p.ph  ~
-  ::=/  pax  (create-path [`@t`hi `@t`bi [~ `@t`phi] [~ `@t`ii]])
-  =/  pax  (create-path [`@t`hi `@t`bi ~ ~])
-  ~&  pax
-  =/  jout  (crawl-path pax)
+    ~&(%whoops !!)
+    :::_  +>.$
+      ::[ost.hid (joba 'error' (jape "problem"))]
+  =/  a  (~(got by p.jin) 'action')
+  =/  act  ?:  ?=($s -.a)  p.a  ~
+  :: logic here to determine which action is being requested
+  =.  mo
+  ?:  =(act 'create-issue')
+    (create-issue jin)
+    ?:  =(act 'change-phase')
+      (change-phase jin)
+    (request-board jin)
   :_  +>.$
-  %+  turn  (prey /sub-path hid)
-    |=  {o/bone *}
-    [o %diff %json jout]
-::
+  mo
 ::
 ++  crawl-path
   |=  pax/path
@@ -180,14 +173,13 @@
         |=  {p/@t $~}
           [%a [[%s p] (crawl-path (welp pax /[p])) ~]]
   =+  txt=.^(@t cx+pax)
+  :: leaves should be a different data structure
   [%s txt]
 ::  subscribe to taskk
 ::
 ++  peer-sub-path
   |=  arg/*
   =|  jon/json
-    ::
-    :: tried to use case 0, but didn't work?
   =.  jon
     %+
       joba 
