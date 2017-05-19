@@ -4,10 +4,10 @@
   ::
   ::
   :: Front End Actions
-  :: - Create issue
-  :: - Get all issues
+  :: - /Create issue
+  :: - /Get all issues
   :: - edit issue body
-  :: - edit issue phase
+  :: - /edit issue phase
   :: - delete issue
   ::
 /?    310

@@ -21,25 +21,24 @@ first (weirdly).
 + I want to start a board
 + I want to add an issue to an existing board
 + I want to subscribe to a board
-+ I want to assign an issue to someone else
++ I want to assign an issue to someone else (v2)
 + I want to join an existing board
 + I want to be updated when a board I subscribe to updates
 
 ## Issue format
 + Board
 + Title
-+ Issue number
++ Issue uuid
 + Body text (md)
 + Author
 + Subscribers?
 + Assignee
 + Phase
-+ Tags
 
 ## Dev "plan"
 - [x] Create new board
 - [x] Create new issue
-- [ ] Change issue phase
+- [x] Change issue phase
 - [ ] Change assignee
 + [ ] New issubscriptions
 + [ ] issue subscriptions
