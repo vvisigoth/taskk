@@ -186,11 +186,13 @@
   =/  act  ?:  ?=($s -.a)  p.a  ~
   :: logic here to determine which action is being requested
   =.  mo
-  ?:  =(act 'create-issue')
-    (create-issue jin)
-    ?:  =(act 'change-phase')
-      (change-phase jin)
-    (request-board jin)
+    ?:  =(act 'create-issue')
+      (create-issue jin)
+      ?:  =(act 'change-phase')  
+        (change-phase jin)
+        ?:  =(act 'edit-issue')  
+          (edit-issue jin)
+        (request-board jin)
   :_  +>.$
   mo
 ::
