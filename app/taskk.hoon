@@ -69,8 +69,40 @@
   :: it would be cool to have a confirmation response move, too
   ::
   [[ost.hid ca] ~]
-::  used for changing board phase
 ::
+::  edit an existing issue
+++  edit-issue
+  |=  jon/json
+  ^-  (list move)
+  =|  {pax/path ca/card}
+  ?.  ?=($o -.jon)
+    :: TODO return an error instead 
+    [[ost.hid %diff %json ~] ~]
+    ::
+  =/  ho  (~(got by p.jon) 'host')
+  =/  hos  ?:  ?=($s -.ho)  p.ho  ~
+  =/  bo  (~(got by p.jon) 'board')
+  =/  boa  ?:  ?=($s -.bo)  p.bo  ~
+  =/  is  (~(got by p.jon) 'issue')
+  =/  iss  ?:  ?=($s -.is)  p.is  ~
+  =/  pha  (~(got by p.jon) 'phase')
+  =/  phas  ?:  ?=($s -.pha)  p.pha  ~
+  =/  des  (~(got by p.jon) 'description')
+  =/  desc  ?:  ?=($s -.des)  p.des  ~
+  ::=/  desc
+    ::'a string'
+    ::
+  =.  pax
+    /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phas)/(scot %tas iss)/md
+  =.  ca
+    :^
+      %info
+      /writing
+      our.hid
+      (foal pax [%md !>((scot %tas desc))])
+  [[ost.hid ca] ~]
+  ::
+::  used for changing board phase
 ++  change-phase
   |=  jon/json
   =|  {inp/path out/path ca/card}
