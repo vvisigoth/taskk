@@ -129,6 +129,25 @@ $(function() {
     return count;
   };
 
+  function edit(tile)
+  {
+    var dObj = $(tile).data();
+    var desc = $(tile).find('.description').val();
+    var pha = $(tile).parent().parent().find('.headlet').text().toLowerCase();
+
+
+    window.urb.send({
+      'action': 'edit-issue',
+      'host': '~rosfet-ronlyn-mirdel-sillev--satnes-haphul-habryg-loppeg',
+      'board': 'testproj',
+      'phase': pha,
+      'description': generateIssue(dObj) + desc,
+      'issue': dObj['id']
+    }, function(d) {
+      console.debug(d);
+    });
+  };
+
   //move tile right or left
   function move(tile, dir)
   {
