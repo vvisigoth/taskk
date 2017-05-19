@@ -141,13 +141,6 @@
   =|  car/card
   ?.  ?=($o -.jon)
     [[ost.hid %diff %json ~] ~]
-    :::+
-    ::  %diff
-    ::  %json 
-    ::%+
-    ::  joba 
-    ::  'error'
-    ::  (jape "problem")
   :: map this whole thing
   =/  h  (~(got by p.jon) 'host')
   =/  b  (~(got by p.jon) 'board')
