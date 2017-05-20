@@ -24,8 +24,10 @@
 ++  create-issue
   :: take json from request
   |=  jon/json
+  ~&  %create-issue-called
+  ~&  jon
   ^-  (list move)
-  =|  {pax/path ca/card}
+  =|  {pax/path id/@tas ca/card car/card}
   ?.  ?=($o -.jon)
     :: TODO return an error instead 
     [[ost.hid %diff %json ~] ~]
@@ -44,8 +46,9 @@
   =/  aut  ?:  ?=($s -.au)  p.au  ~
   =/  as  (~(got by p.jon) 'assignee')
   =/  ass  ?:  ?=($s -.as)  p.as  ~
+  =.  id  (scot %da now.hid)
   =.  pax 
-    ::/(scot %tas hi)/=/app/taskk/(scot %tas bi)/(scot %tas phi)/(scot %da now.hid)/json
+    ::/(scot %tas hi)/=/app/taskk/(scot %tas bi)/(scot %tas phi)/(scot %tas id)/json
     :: for right now, only write to our urbit
     %/(scot %tas boa)/(scot %tas pha)/(scot %da now.hid)/md
   =/  txt
@@ -68,7 +71,13 @@
       (foal pax [%md !>(txt)])
   :: it would be cool to have a confirmation response move, too
   ::
-  [[ost.hid ca] ~]
+  ::[[ost.hid ca] ~]
+  =.  car  [%diff %json (jobe ~[['action-completed' jon] ['issue-id' (jape (trip id))]])]
+  =/  out
+    %+  turn  (prey /sub-path hid)
+      |=  {o/bone *}
+      [o car]
+  (welp out ~[[ost.hid ca]])
 ::
 ::  edit an existing issue
 ++  edit-issue
@@ -89,9 +98,6 @@
   =/  phas  ?:  ?=($s -.pha)  p.pha  ~
   =/  des  (~(got by p.jon) 'description')
   =/  desc  ?:  ?=($s -.des)  p.des  ~
-  ::=/  desc
-    ::'a string'
-    ::
   =.  pax
     /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phas)/(scot %tas iss)/md
   =.  ca
@@ -105,6 +111,7 @@
 ::  used for changing board phase
 ++  change-phase
   |=  jon/json
+  ~&  %change-phase-called
   =|  {inp/path out/path ca/card}
   ^-  (list move)
   ?.  ?=($o -.jon)
@@ -152,7 +159,6 @@
       %diff
       %json
       (crawl-path pax)
-  ~&  car
   %+  turn  (prey /sub-path hid)
     |=  {o/bone *}
     [o car]
@@ -169,6 +175,8 @@
 ::
 ++  poke-json
   |=  jin/json
+  ~&  %poke-json
+  ~&  jin
   ^-  (quip move +>.$)
   =|  {jout/json mo/(list move)}
   ?.  ?=($o -.jin)
