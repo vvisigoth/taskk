@@ -9,6 +9,9 @@
 //- delete
 $(function() {
 
+  var url = window.location.href;
+  var urlData = /#(.*)\/(.*)$/.exec(url)
+
   var LAST_KEY;
 
   var issueTemplate = '<div class="tile">' +
@@ -374,8 +377,8 @@ $(function() {
   )
   window.urb.send({
       action: 'request-board',
-      host: '~rosfet-ronlyn-mirdel-sillev--satnes-haphul-habryg-loppeg',
-      board: 'testproj'
+      host: urlData[1],
+      board: urlData[2]
   });
 
 })
