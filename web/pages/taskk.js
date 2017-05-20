@@ -279,6 +279,7 @@ $(function() {
       var cleaned = contents.replace(/\-\-\-[\s\S]*\-\-\-[\s\S]/,'');
 
       return {
+        'id': d[0],
         'title': title[1],
         'author': author[1],
         'assignee': assignee[1],
