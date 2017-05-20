@@ -215,15 +215,15 @@ $(function() {
       'to-phase': newPhase,
       'issue': issueData['id']
     }, function(d) {
-      console.debug(d);
+      console.debug('callback from phase change');
     });
     //$(tile).remove();
     slide(tile, dir);
     return;
   }
 
-    function contract(tile) {
-      $(tile).removeClass('expanded');
+    function contract() {
+      $('.tile').removeClass('expanded');
       //$(tile).find('.description').attr('readonly', 'readonly');
       $('.bumped').css('margin-top', 0);
     };
@@ -319,7 +319,20 @@ $(function() {
   window.urb.appl = "taskk"
   window.urb.bind('/sub-path',
     function(err,dat) {
+      console.debug('incoming on sub-path');
+      console.debug(dat);
+
+      if (dat.data['action-completed']) {
+        console.debug('calling create tile');
+
+        var d = dat.data['action-completed'];
+        d['id'] = dat.data['issue-id'];
+        var t = createTile(d);
+        // insert on ui
+        $('.' + d['phase']).find('.col-container').prepend(t);
+      };
       initializeUi(dat);
+
       $($('.tile')[0]).addClass('active');
 
       $('.title').click(function(e) {
