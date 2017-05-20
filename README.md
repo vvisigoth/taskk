@@ -39,7 +39,14 @@ first (weirdly).
 - [x] Create new board
 - [x] Create new issue
 - [x] Change issue phase
-- [ ] Change assignee
+- [x] Change assignee
+- [ ] update front end on issue creation
+- [ ] subscribe app to proper dir
+- [ ] back end for delete
 + [ ] New issubscriptions
 + [ ] issue subscriptions
+- [ ] refactor js
+- [ ] refactor hoon
+
+## Bugs
 
