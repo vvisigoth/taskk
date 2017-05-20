@@ -16,6 +16,28 @@ div.headlet
   color: white;
   text-align: center;
   padding-top: 10px;
+  transition: height 100ms;
+}
+
+div.headlet:hover {
+  height: 40px
+}
+
+div.headlet:hover .add-button
+{
+  display: inherit;
+}
+
+div.headlet .add-button
+{
+  display: none;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+div.headlet .add-button:hover
+{
+  color: darkgray;
 }
 
 div.tile

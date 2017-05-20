@@ -81,14 +81,59 @@ $(function() {
     };
   };
 
+  //given: phase
+  //send to urbit
+  function newIssue(pha) {
+    window.urb.send({
+      'action': 'create-issue',
+      'host': urlData[1],
+      'phase': pha.toLowerCase(),
+      'board': urlData[2],
+      'temp-id': Math.round(Math.random() * 100),
+      'title': 'New Issue',
+      'description': 'Describe issue here',
+      'author': window.urb.user,
+      'assignee': window.urb.user
+  }, function(d) {
+    console.debug('new issue callback');
+    console.debug(d);
+  })
+  };
+
+  // takes a data obj and returns a dom node
+  function createTile(dobj) {
+    var a = $(issueTemplate)
+    //var issueObj = parseIssue(dobj);
+    a.find('.title').val(dobj['title']);
+    a.find('.author').val(dobj['author']);
+    a.find('.assignee').val(dobj['assignee']);
+    a.find('.description').text(dobj['description']);
+    var lines = countLines(dobj['description']);
+    if (lines < 2)
+    {
+      a.addClass('one');
+    } else if (lines >= 2 && lines < 7)
+    {
+      a.addClass('two');
+    } else
+    {
+      a.addClass('three');
+    }
+    a.data({'id': dobj['id'],
+      'title': dobj['title'],
+      'author': dobj['author'],
+      'assignee': dobj['assignee']
+    });
+    return a
+  };
+
   function slide(tile, dir) {
     var targets = gridNeighbor(tile, dir);
     if ($(targets[0]).data().id == $(tile).data().id) {
-      console.debug('nope');
       var col = '#' + $(tile).parent().parent().attr('id');
-      var oldPhase = $(col).find('.headlet').text().toLowerCase()
+      var oldPhase = $(col).find('.headlet .headlet-container').text().toLowerCase()
       var destCol = newCol(col, dir) + ' .col-container';
-      var newPhase = $(newCol(col, dir)).find('.headlet').text().toLowerCase();
+      var newPhase = $(newCol(col, dir)).find('.headlet .headlet-container').text().toLowerCase();
     //actual move
       $(tile).clone(true).appendTo($(destCol));
     } else {
@@ -106,7 +151,6 @@ $(function() {
   {
     if (colString == '#col0' && dir == 'left' || colString == '#col3' && dir == 'right')
     {
-      console.log("can't move");
       return '#' + colString
     }
     else
@@ -133,8 +177,7 @@ $(function() {
   {
     var dObj = $(tile).data();
     var desc = $(tile).find('.description').val();
-    var pha = $(tile).parent().parent().find('.headlet').text().toLowerCase();
-
+    var pha = $(tile).parent().parent().find('.headlet .headlet-container').text().toLowerCase();
 
     window.urb.send({
       'action': 'edit-issue',
@@ -144,18 +187,17 @@ $(function() {
       'description': generateIssue(dObj) + desc,
       'issue': dObj['id']
     }, function(d) {
-      console.debug(d);
+      contract()
     });
   };
 
   //move tile right or left
   function move(tile, dir)
   {
-    console.log('movin');
     var col = '#' + $(tile).parent().parent().attr('id');
-    var oldPhase = $(col).find('.headlet').text().toLowerCase()
+    var oldPhase = $(col).find('.headlet .headlet-container').text().toLowerCase()
     var destCol = newCol(col, dir) + ' .col-container';
-    var newPhase = $(newCol(col, dir)).find('.headlet').text().toLowerCase();
+    var newPhase = $(newCol(col, dir)).find('.headlet .headlet-container').text().toLowerCase();
     //actual move
     //$(tile).clone(true).prependTo($(destCol));
     var issueData = $(tile).data();
@@ -222,8 +264,9 @@ $(function() {
 
     function parseIssue(d)
     {
+      console.debug(d);
+
       var contents = d[1][0][1];
-      console.debug(contents);
       //make this a function
       var title = /title: '(.*)'[\r\n]/.exec(contents);
       var author = /author: '(.*)'[\r\n]/.exec(contents);
@@ -244,35 +287,26 @@ $(function() {
       {
         //sort these columns
         $.each(d.data, function(i, v) {
-          var dest = $('#col' + i);
-          var head = $('<div class="headlet">' + v[0].toUpperCase() + '</div>')
-          var cont = dest.find('.col-container'); 
-          dest.prepend(head);
-          $.each(v[1], function(j, q) {
-            var a = $(issueTemplate)
-            cont.prepend(a);
-            var issueObj = parseIssue(q);
-            a.find('.title').val(issueObj['title']);
-            a.find('.author').val(issueObj['author']);
-            a.find('.assignee').val(issueObj['assignee']);
-            a.find('.description').text(issueObj['description']);
-            var lines = countLines(issueObj['description']);
-            if (lines < 2)
-            {
-              a.addClass('one');
-            } else if (lines >= 2 && lines < 7)
-            {
-              a.addClass('two');
-            } else
-            {
-              a.addClass('three');
-            }
-            a.data({'id': q[0],
-              'title': issueObj['title'],
-              'author': issueObj['author'],
-              'assignee': issueObj['assignee']
+          //to catch bizarre bug
+          //TODO figure this out
+          if (v[0][1] != "T") {
+            var dest = $('#col' + v[0][0]);
+            dest.addClass(v[0]);
+            var head = $('<div class="headlet">' + 
+              '<div class="headlet-container">' +
+              v[0].toUpperCase() + 
+              '</div>' +
+              '<div class="add-button">+</div>' +
+              '</div>')
+            var cont = dest.find('.col-container'); 
+            dest.prepend(head);
+            $.each(v[1], function(j, q) {
+              console.debug(q);
+              var d = parseIssue(q)
+              console.debug(d);
+              cont.prepend(createTile(d));
             });
-          });
+          }
         });
       }
     };
@@ -289,6 +323,12 @@ $(function() {
         } else {
           contract($(this).parent().parent())
         }
+      });
+
+      $('.add-button').click(function(e) {
+        var pha = $(this).parent().find('.headlet-container').text();
+
+        newIssue(pha)
       });
 
       $('.submit').click(function(e) {
