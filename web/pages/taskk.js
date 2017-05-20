@@ -1,12 +1,14 @@
 //TODO
 //- /move on back end
-//- good answer for phase name
-//- animate tile slide
+//- move up and down
+//- new
+//- delete
 //- /only move selected
 //- problem selecting up
-//- move up and down
 //- /create
-//- delete
+//- good answer for phase name
+//- animate tile slide
+//- weird line breaks in edited issues
 $(function() {
 
   var url = window.location.href;
