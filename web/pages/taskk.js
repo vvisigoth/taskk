@@ -30,6 +30,74 @@ $(function() {
     '<input class="submit" type="submit">' +
   '</div>';
 
+  // Add a new issue
+  $('.add-button').on('click', function(e) {
+    $('#empty-message').css('display', 'none');
+    var pha = $(this).parent().find('.headlet-container').text();
+
+    newIssue(pha)
+  });
+
+  //KEY SHORTCUTS
+
+  $(window).keydown(function(e) {
+
+
+    console.debug(e);
+
+    // EAT DOUBLE PRESS
+    if (e.timeStamp == LAST_KEY) {
+      return;
+    }
+
+    LAST_KEY = e.timeStamp;
+
+
+    var activeTile = $('.tile.active');
+
+    if (e.shiftKey && e.ctrlKey) 
+    {
+      if (e.keyCode == 37)
+      {
+        move(activeTile, 'left');
+      } else if (e.keyCode == 39) {
+        move(activeTile, 'right');
+      } else if (e.keyCode == 65) {
+        var pha = $(activeTile).parent().parent().find('.headlet-container').text();
+        newIssue(pha)
+      }
+    }
+
+    if (e.ctrlKey) {
+
+      if (e.keyCode == 37) {
+        var newActive = gridNeighbor(activeTile, 'left')[0]
+        $(activeTile).removeClass('active');
+        $(newActive).addClass('active');
+      } else if (e.keyCode == 38) {
+        var newActive = gridNeighbor(activeTile, 'up')[0];
+        $(activeTile).removeClass('active');
+        $(newActive).addClass('active');
+      } else if (e.keyCode == 39) {
+        var newActive = gridNeighbor(activeTile, 'right')[0];
+        $(activeTile).removeClass('active');
+        $(newActive).addClass('active');
+      } else if (e.keyCode == 40) {
+        var newActive = gridNeighbor(activeTile, 'down')[0];
+        $(activeTile).removeClass('active');
+        $(newActive).addClass('active');
+      } else if (e.keyCode == 13) {
+        if (!$(activeTile).hasClass('expanded')) {
+          expand($(activeTile));
+        } else {
+          contract($(activeTile));
+        }
+      }
+
+    }
+
+  });
+
   function intersectRect(r1, r2) {
     return !(r2.left > r1.right || 
       r2.right < r1.left || 
@@ -233,177 +301,186 @@ $(function() {
     //$(tile).remove();
     slide(tile, dir);
     return;
-  }
+  };
 
-    function contract() {
-      $('.tile').removeClass('expanded');
-      //$(tile).find('.description').attr('readonly', 'readonly');
-      $('.bumped').css('margin-top', 0);
-    };
-    function expand(tile, dir) {
-      var col = $(tile).parent().parent().attr('id');
+  function contract() {
+    $('.tile').removeClass('expanded');
+    //$(tile).find('.description').attr('readonly', 'readonly');
+    var ogMar = $('.bumped').data('og-margin');
+
+    console.debug(ogMar);
+
+    if (ogMar) {
+      $('.bumped').css('margin-top', ogMar);
+    } else {
+      $('.bumped').css('margin-top', '');
+    }
+    $('.tile').removeClass('bumped');
+  };
+
+  function expand(tile) {
+    var col = $(tile).parent().parent().attr('id');
+    console.debug(col);
+
+    if (col != 'col3') {
       var rect = {
         top: $(tile).offset().top,
         left: $(tile).offset().left,
         right: $(tile).offset().left + (2 * $(tile).width()),
         bottom: ($(tile).offset().top + 600)
       };
-
-      var inter = $('.tile').filter(function(i, v) {
-        if ($(v).parent().parent().attr('id') == col) {
-          return false;
-        }
-        var candidateTile = {
-          'top': $(v).offset().top,
-          'left': $(v).offset().left,
-          'right': $(v).offset().left + $(v).width(),
-          'bottom': $(v).offset().top + $(v).height()
-        };
-        return intersectRect(rect, candidateTile);
-      })
-      console.debug(inter);
-
-      $(inter[0]).addClass('bumped').css('margin-top', '630px'); // this will have to be customized
-      $(tile).addClass('expanded');
-     // $(tile).find('.description').attr('readonly', '');
-      //determine expanded size
-      //find overlapping nodes
-      //in neighboring cols, up margin to create space
-    };
-    
-    function generateIssue(dObj)
-    {
-      return "---\r" +
-      "author: '" + dObj['author'] + "'\r" +
-      "assignee: '" + dObj['assignee'] + "'\r" +
-      "title: '" + dObj['title'] + "'\r" +
-      "---'\r"
-    };
-
-    function parseIssue(d)
-    {
-      console.debug(d);
-
-      var contents = d[1][0][1];
-      //make this a function
-      var title = /title: '(.*)'[\r\n]/.exec(contents);
-      var author = /author: '(.*)'[\r\n]/.exec(contents);
-      var assignee = /assignee: '(.*)'[\r\n]/.exec(contents);
-      var cleaned = contents.replace(/\-\-\-[\s\S]*\-\-\-[\s\S]/,'');
-
-      return {
-        'id': d[0],
-        'title': title[1],
-        'author': author[1],
-        'assignee': assignee[1],
-        'description': cleaned.trim()
+    } else {
+      var rect = {
+        top: $(tile).offset().top,
+        left: $(tile).offset().left - $(tile).width(),
+        right: $(tile).offset().right,
+        bottom: ($(tile).offset().top + 600)
       };
-    };
+    }
 
-    function initializeUi(d)
-    {
-      if (d.data.length > 1)
-      {
-        //sort these columns
-        $.each(d.data, function(i, v) {
-          //to catch bizarre bug
-          //TODO figure this out
-          if (v[0][1] != "T") {
-            var dest = $('#col' + v[0][0]);
-            dest.addClass(v[0]);
-            var head = $('<div class="headlet">' + 
-              '<div class="headlet-container">' +
-              v[0].toUpperCase() + 
-              '</div>' +
-              '<div class="add-button">+</div>' +
-              '</div>')
-            var cont = dest.find('.col-container'); 
-            dest.prepend(head);
-            $.each(v[1], function(j, q) {
-              console.debug(q);
-              var d = parseIssue(q)
-              console.debug(d);
-              cont.prepend(createTile(d));
-            });
-          }
-        });
+    var inter = $('.tile').filter(function(i, v) {
+      if ($(v).parent().parent().attr('id') == col) {
+        return false;
       }
+      var candidateTile = {
+        'top': $(v).offset().top,
+        'left': $(v).offset().left,
+        'right': $(v).offset().left + $(v).width(),
+        'bottom': $(v).offset().top + $(v).height()
+      };
+      return intersectRect(rect, candidateTile);
+    })
+
+    contract();
+
+    if (inter.length > 0) {
+      var diff = $(tile).offset().top - $(inter[0]).offset().top;
+
+      $(tile).data('og-margin', $(tile).css('margin-top'));
+
+      console.debug($(tile).data());
+
+      var bumpAmt = diff > 0 ? 630 + diff : 630;
+
+      $(inter[0]).addClass('bumped').css('margin-top', bumpAmt + 'px');
+    }
+
+    $(tile).addClass('expanded');
+    $(tile).find('.description').focus();
+  };
+    
+  function generateIssue(dObj) {
+    return "---\r" +
+    "author: '" + dObj['author'] + "'\r" +
+    "assignee: '" + dObj['assignee'] + "'\r" +
+    "title: '" + dObj['title'] + "'\r" +
+    "---'\r"
+  };
+
+  function parseIssue(d) {
+    console.debug(d);
+
+    var contents = d[1][0][1];
+    //make this a function
+    var title = /title: '(.*)'[\r\n]/.exec(contents);
+    var author = /author: '(.*)'[\r\n]/.exec(contents);
+    var assignee = /assignee: '(.*)'[\r\n]/.exec(contents);
+    var cleaned = contents.replace(/\-\-\-[\s\S]*\-\-\-[\s\S]/,'');
+
+    return {
+      'id': d[0],
+      'title': title[1],
+      'author': author[1],
+      'assignee': assignee[1],
+      'description': cleaned.trim()
     };
+  };
+
+  function initializeUi(d) {
+      var boardObj = {};
+
+      $.each(d.data, function(k, q) {
+        boardObj[q[0]] = q[1];
+      });
+
+      console.debug(boardObj);
+
+      //sort these columns
+      for (var i=0; i < PHASE_INDEX.length; i++) {
+
+        var cont = $('#col' + i + ' .col-container');
+
+          // What if board has some empty cols?
+          if (boardObj[PHASE_INDEX[i]]) {
+
+            for (var j = 0; j < boardObj[PHASE_INDEX[i]].length; j++) {
+              console.debug(boardObj[PHASE_INDEX[i]]);
+
+              var tempObj = boardObj[PHASE_INDEX[i]][j];
+              var d = parseIssue(tempObj);
+              cont.prepend(createTile(d));
+            }
+
+          }
+      }
+    INITIALIZED = true;
+  };
 
   window.urb.appl = "taskk"
+
   window.urb.bind('/sub-path',
     function(err,dat) {
-      console.debug('incoming on sub-path');
+
+      console.debug("on sub path");
       console.debug(dat);
 
+      //Called if new issue has succeeded
       if (dat.data['action-completed']) {
-        console.debug('calling create tile');
 
         var d = dat.data['action-completed'];
         d['id'] = dat.data['issue-id'];
         var t = createTile(d);
         // insert on ui
         $('.' + d['phase']).find('.col-container').prepend(t);
+        $('.tile').removeClass('active');
+        $(t).addClass('active');
       };
-      initializeUi(dat);
 
-      $($('.tile')[0]).addClass('active');
+      // request board came back fine
+      if (dat.data.length > 0 && !INITIALIZED) {
 
-      $('.title').click(function(e) {
-        if (!$(this).parent().parent().hasClass('expanded')) {
-          expand($(this).parent().parent(), 'right');
-        } else {
-          contract($(this).parent().parent())
-        }
-      });
+        initializeUi(dat);
 
-      $('.add-button').click(function(e) {
-        var pha = $(this).parent().find('.headlet-container').text();
+        $($('.tile')[0]).addClass('active');
 
-        newIssue(pha)
-      });
+      } else if (dat.data.length == 0) {
+        k
+        // Start a new board!
+        $('#empty-message').text("looks like there's no board here. create issues to start one.");
+      }
 
-      $('.submit').click(function(e) {
-        edit($(this).parent());
-      });
+    //HANDLERS
 
-      $(window).keydown(function(e) {
+    // Expand/edit
+    /*
+    $('.tile').on('dblclick', function(e) {
+      if (!$(this).parent().parent().hasClass('expanded')) {
+        expand($(this).parent().parent());
+      } else {
+        contract($(this).parent().parent())
+      }
+    });
+    */
 
-        if (e.timeStamp == LAST_KEY) {
-          return;
-        }
-        LAST_KEY = e.timeStamp;
-        console.debug(LAST_KEY);
-        var activeTile = $('.tile.active');
-        if (e.shiftKey) 
-        {
-          if (e.keyCode == 37)
-          {
-            move(activeTile, 'left');
-          } else if (e.keyCode == 39) {
-            move(activeTile, 'right');
-          }
-        }
-        if (e.keyCode == 37) {
-          var newActive = gridNeighbor(activeTile, 'left')[0]
-          $(activeTile).removeClass('active');
-          $(newActive).addClass('active');
-        } else if (e.keyCode == 38) {
-          var newActive = gridNeighbor(activeTile, 'up')[0];
-          $(activeTile).removeClass('active');
-          $(newActive).addClass('active');
-        } else if (e.keyCode == 39) {
-          var newActive = gridNeighbor(activeTile, 'right')[0];
-          $(activeTile).removeClass('active');
-          $(newActive).addClass('active');
-        } else if (e.keyCode == 40) {
-          var newActive = gridNeighbor(activeTile, 'down')[0];
-          $(activeTile).removeClass('active');
-          $(newActive).addClass('active');
-        }
-      });
-    }
-  )
+    $('.submit').on('click', function(e) {
+      console.debug('submit clicked');
+
+      edit($(this).parent());
+    });
+
+  });
+
+  // Send first request to kick off board load
   window.urb.send({
       action: 'request-board',
       host: HOST,
