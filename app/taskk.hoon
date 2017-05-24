@@ -2,7 +2,6 @@
 ::
 ::::  
   ::
-  ::
   :: Front End Actions
   :: - /Create issue
   :: - /Get all issues
@@ -149,6 +148,8 @@
   ?.  ?=($o -.jon)
     [[ost.hid %diff %json ~] ~]
   :: map this whole thing
+  :: list of keys
+  :: map of keys and values
   =/  h  (~(got by p.jon) 'host')
   =/  b  (~(got by p.jon) 'board')
   =/  hi  ?:  ?=($s -.h)  p.h  ~
