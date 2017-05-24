@@ -51,28 +51,42 @@ div.headlet .add-button:hover
 
 div.tile
 {
-  width: calc(100% - 20px);
   border-left: black 10px solid;
-  border-top: black 10px solid;
-  padding: 10px;
+  border-bottom: black 10px solid;
+  border-right: black 10px solid;
+  margin-left: -5px;
+  width: calc(100% - 10px);
   cursor: pointer;
   transition: margin-top 100ms;
   position: static;
 }
 
+div#col3 div.tile.expanded
+{
+  margin-left: calc(-5px - 100%);
+  width: calc(200% - 15px);
+}
+
+div#col2 div.tile.expanded
+{
+  width: calc(200% - 15px);
+}
+
 div.tile.expanded
 {
-  height: 600px;
-  width: calc(200% - 30px);
+  height: 620px;
+  width: calc(200% - 10px);
   transition-delay: 200ms;
   transition: height 80ms;
   transition: width 80ms;
   position: relative;
+  margin-top: -10px;
+  border-top: black 10px solid;
 }
 
 div.tile.expanded .description
 {
-  height: calc(100% - 80px);
+  height: calc(100% - 90px);
 }
 
 div.tile .submit
@@ -107,6 +121,8 @@ div.tile .tile-container
   display: block;
   width: 60%;
   overflow: hidden;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 div.tile .indicator
@@ -131,8 +147,7 @@ div.col-container .tile:last-child
 
 div#col3 div.tile
 {
-  width: calc(100% - 40px);
-  border-right: black 10px solid;
+  width: calc(100% - 15px);
 }
 
 div.one
@@ -147,7 +162,7 @@ div.two
 
 div.three
 {
-  height: 300px;
+  height: 400px;
 }
 
 div.tile .title
@@ -166,18 +181,17 @@ div.tile input.title
 
 div.tile .description
 {
-    font-family: scp;
-    width: calc(100% - 10px);
-    height: calc(100% - 46px);
-    padding: 10px;
-    background-color: whitesmoke;
-    /* white-space: pre; */
-    overflow: hidden;
-    margin-top: 10px;
-    border: none;
-    outline: none;
-    resize: none;
-    font-size: 1em;
+  font-family: scp;
+  width: calc(100% - 10px);
+  height: calc(100% - 60px);
+  padding: 10px;
+  background-color: whitesmoke;
+  /* white-space: pre; */
+  overflow: hidden;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 1em;
 }
 
 div#col3 div.tile div.description
