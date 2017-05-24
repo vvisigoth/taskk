@@ -1,20 +1,23 @@
 //TODO
-//- /move on back end
 //- move up and down
-//- new
 //- delete
-//- /only move selected
 //- problem selecting up
-//- /create
-//- good answer for phase name
 //- animate tile slide
 //- weird line breaks in edited issues
 $(function() {
+  //GLOBALS 
+
 
   var url = window.location.href;
-  var urlData = /#(.*)\/(.*)$/.exec(url)
+  var urlData = /#(.*)\/(.*)$/.exec(url);
+
+  var HOST = urlData[1];
+  var BOARD = urlData[2];
+
+  var PHASE_INDEX = ['todo', 'doin', 'show', 'done'];
 
   var LAST_KEY;
+  var INITIALIZED = false;
 
   var issueTemplate = '<div class="tile">' +
     '<div class="tile-container">' +
@@ -180,16 +183,26 @@ $(function() {
 
   function edit(tile)
   {
+
     var dObj = $(tile).data();
     var desc = $(tile).find('.description').val();
+    var author = $(tile).find('.author').val()
+    var title = $(tile).find('.title').val();
     var pha = $(tile).parent().parent().find('.headlet .headlet-container').text().toLowerCase();
+
+    dObj['title'] = title;
+    dObj['author'] = author;
+
+    var yaml = generateIssue(dObj)
+
+    assignTileSize(tile, desc);
 
     window.urb.send({
       'action': 'edit-issue',
-      'host': '~rosfet-ronlyn-mirdel-sillev--satnes-haphul-habryg-loppeg',
-      'board': 'testproj',
+      'host': HOST,
+      'board': BOARD,
       'phase': pha,
-      'description': generateIssue(dObj) + desc,
+      'description': yaml + desc,
       'issue': dObj['id']
     }, function(d) {
       contract()
@@ -209,8 +222,8 @@ $(function() {
     // move on back end
     window.urb.send({
       'action': 'change-phase',
-      'host': '~rosfet-ronlyn-mirdel-sillev--satnes-haphul-habryg-loppeg',
-      'board': 'testproj',
+      'host': HOST,
+      'board': BOARD,
       'from-phase': oldPhase,
       'to-phase': newPhase,
       'issue': issueData['id']
@@ -393,8 +406,8 @@ $(function() {
   )
   window.urb.send({
       action: 'request-board',
-      host: urlData[1],
-      board: urlData[2]
+      host: HOST,
+      board: BOARD
   });
 
 })
