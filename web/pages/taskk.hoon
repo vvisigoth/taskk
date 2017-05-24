@@ -10,18 +10,35 @@
   ==
   ;body
     ;div#cont
-      ;div#col0(class "column")
+      ;div#col0(class "column todo")
+        ;div(class "headlet")
+          ;div(class "headlet-container"):"TODO"
+          ;div(class "add-button"):"+"
+        ==
         ;div(class "col-container");
       ==
-      ;div#col1(class "column")
+      ;div#col1(class "column doin")
+        ;div(class "headlet")
+          ;div(class "headlet-container"):"DOIN"
+          ;div(class "add-button"):"+"
+        ==
         ;div(class "col-container");
       ==
-      ;div#col2(class "column")
+      ;div#col2(class "column show")
+        ;div(class "headlet")
+          ;div(class "headlet-container"):"SHOW"
+          ;div(class "add-button"):"+"
+        ==
         ;div(class "col-container");
       ==
-      ;div#col3(class "column")
+      ;div#col3(class "column done")
+        ;div(class "headlet")
+          ;div(class "headlet-container"):"DONE"
+          ;div(class "add-button"):"+"
+        ==
         ;div(class "col-container");
       ==
+      ;div#empty-message;    
     ==
     ;script(type "text/javascript", src "/pages/taskk.js");
   ==
