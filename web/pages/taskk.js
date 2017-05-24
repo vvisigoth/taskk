@@ -177,6 +177,25 @@ $(function() {
   })
   };
 
+  function assignTileSize(tile, text) {
+
+    $(tile).removeClass('one two three');
+
+    var lines = countLines(text);
+
+    if (lines < 2)
+    {
+      tile.addClass('one');
+    } else if (lines >= 2 && lines < 7)
+    {
+      tile.addClass('two');
+    } else
+    {
+      tile.addClass('three');
+    }
+    return tile
+  };
+
   // takes a data obj and returns a dom node
   function createTile(dobj) {
     var a = $(issueTemplate)
@@ -185,23 +204,12 @@ $(function() {
     a.find('.author').val(dobj['author']);
     a.find('.assignee').val(dobj['assignee']);
     a.find('.description').text(dobj['description']);
-    var lines = countLines(dobj['description']);
-    if (lines < 2)
-    {
-      a.addClass('one');
-    } else if (lines >= 2 && lines < 7)
-    {
-      a.addClass('two');
-    } else
-    {
-      a.addClass('three');
-    }
     a.data({'id': dobj['id'],
       'title': dobj['title'],
       'author': dobj['author'],
       'assignee': dobj['assignee']
     });
-    return a
+    return assignTileSize(a, dobj['description']);
   };
 
   function slide(tile, dir) {
