@@ -119,6 +119,7 @@ $(function() {
       'right': pos.left + rect.width,
       'bottom': pos.top + rect.height
     };
+
     console.debug(dir);
     if (dir == 'left') {
       pretRect.top = pretRect.top + 40;
