@@ -162,14 +162,14 @@ $(function() {
   function newIssue(pha) {
     window.urb.send({
       'action': 'create-issue',
-      'host': urlData[1],
+      'host': HOST,
       'phase': pha.toLowerCase(),
-      'board': urlData[2],
+      'board': BOARD,
       'temp-id': Math.round(Math.random() * 100),
       'title': 'New Issue',
       'description': 'Describe issue here',
-      'author': window.urb.user,
-      'assignee': window.urb.user
+      'author': '~' + window.urb.user,
+      'assignee': '~' + window.urb.user
   }, function(d) {
     console.debug('new issue callback');
     console.debug(d);
