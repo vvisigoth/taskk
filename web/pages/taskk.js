@@ -51,6 +51,7 @@ $(function() {
     if (!tile) {
       return;
     }
+    var col = '#' + $(tile).parent().parent().attr('id');
     var pos = $(tile).offset();
     var rect = {'width': $(tile).width(), 'height': $(tile).height()};
     console.debug(pos);
@@ -272,6 +273,7 @@ $(function() {
     } else {
       $('.bumped').css('margin-top', '');
     }
+    $('.description').blur()
     $('.tile').removeClass('bumped');
   };
 
