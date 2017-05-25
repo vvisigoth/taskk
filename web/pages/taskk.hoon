@@ -2,7 +2,7 @@
 !:
 ;html
   ;head
-    ;script(type "text/javascript", src "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js");
+    ;script(type "text/javascript", src "/~~/~/at/lib/jquery.min.js"); 
     ;script(type "text/javascript", src "/~~/~/at/lib/js/urb.js");
     ;link/"/pages/taskk.css"(rel "stylesheet");
     ;link/"/lib/css/fonts.css"(rel "stylesheet");
