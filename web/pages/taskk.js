@@ -38,65 +38,6 @@ $(function() {
     newIssue(pha)
   });
 
-  //KEY SHORTCUTS
-
-  $(window).keydown(function(e) {
-
-
-    console.debug(e);
-
-    // EAT DOUBLE PRESS
-    if (e.timeStamp == LAST_KEY) {
-      return;
-    }
-
-    LAST_KEY = e.timeStamp;
-
-
-    var activeTile = $('.tile.active');
-
-    if (e.shiftKey && e.ctrlKey) 
-    {
-      if (e.keyCode == 37)
-      {
-        move(activeTile, 'left');
-      } else if (e.keyCode == 39) {
-        move(activeTile, 'right');
-      } else if (e.keyCode == 65) {
-        var pha = $(activeTile).parent().parent().find('.headlet-container').text();
-        newIssue(pha)
-      }
-    }
-
-    if (e.ctrlKey) {
-
-      if (e.keyCode == 37) {
-        var newActive = gridNeighbor(activeTile, 'left')[0]
-        $(activeTile).removeClass('active');
-        $(newActive).addClass('active');
-      } else if (e.keyCode == 38) {
-        var newActive = gridNeighbor(activeTile, 'up')[0];
-        $(activeTile).removeClass('active');
-        $(newActive).addClass('active');
-      } else if (e.keyCode == 39) {
-        var newActive = gridNeighbor(activeTile, 'right')[0];
-        $(activeTile).removeClass('active');
-        $(newActive).addClass('active');
-      } else if (e.keyCode == 40) {
-        var newActive = gridNeighbor(activeTile, 'down')[0];
-        $(activeTile).removeClass('active');
-        $(newActive).addClass('active');
-      } else if (e.keyCode == 13) {
-        if (!$(activeTile).hasClass('expanded')) {
-          expand($(activeTile));
-        } else {
-          contract($(activeTile));
-        }
-      }
-
-    }
-
-  });
 
   function intersectRect(r1, r2) {
     return !(r2.left > r1.right || 
@@ -120,7 +61,13 @@ $(function() {
       'bottom': pos.top + rect.height
     };
 
-    console.debug(dir);
+    // check if we're about to go off the board
+    if (col == '#col0' && dir == 'left') {
+      return [tile]
+    } else if (col == '#col3' && dir == 'right') {
+      return [tile]
+    }
+
     if (dir == 'left') {
       pretRect.top = pretRect.top + 40;
       pretRect.bottom = pretRect.bottom - 40;
@@ -152,6 +99,7 @@ $(function() {
       return intersectRect(pretRect, candidateTile);
     })
     if (inter.length > 0) {
+      // found a neighbor
       return inter;
     } else {
       return [tile];
@@ -434,6 +382,87 @@ $(function() {
       }
     INITIALIZED = true;
   };
+
+  function moveSelect(activeTile, dir)
+  {
+    var col = '#' + $(activeTile).parent().parent().attr('id');
+
+    // don't escape board
+    if ((col == '#col0' && dir == 'left') || (col == '#col3' && dir == 'right')) {
+      console.debug('dont spill');
+      return
+    }
+    var newActive = gridNeighbor(activeTile, dir)[0]
+      // no neighbor
+    if (newActive == activeTile) {
+      console.debug('nowhere to go');
+
+      if (dir =='left' || dir =='right') {
+        // neighbor column
+        var nc = newCol(col, dir);
+        // check for empty column
+        if ($(nc + ' .tile').length < 1) {
+          var destCol = newCol(newCol(col, dir), dir);
+          //we're safe from going off the board, so go nuts
+          newActive = $(destCol + ' .tile')[0];
+        } 
+      }
+    }
+    $(activeTile).removeClass('active');
+    $(newActive).addClass('active');
+  };
+
+  //KEY SHORTCUTS
+
+  $(window).keydown(function(e) {
+
+
+    console.debug(e);
+
+    // EAT DOUBLE PRESS
+    if (e.timeStamp == LAST_KEY) {
+      return;
+    }
+
+    LAST_KEY = e.timeStamp;
+
+
+    var activeTile = $('.tile.active');
+
+    if (e.shiftKey && e.ctrlKey) 
+    {
+      if (e.keyCode == 37)
+      {
+        move(activeTile, 'left');
+      } else if (e.keyCode == 39) {
+        move(activeTile, 'right');
+      } else if (e.keyCode == 65) {
+        var pha = $(activeTile).parent().parent().find('.headlet-container').text();
+        newIssue(pha)
+      }
+    }
+
+    if (e.ctrlKey) {
+
+      if (e.keyCode == 37) {
+        moveSelect(activeTile, 'left');
+      } else if (e.keyCode == 38) {
+        moveSelect(activeTile, 'up');
+      } else if (e.keyCode == 39) {
+        moveSelect(activeTile, 'right');
+      } else if (e.keyCode == 40) {
+        moveSelect(activeTile, 'down');
+      } else if (e.keyCode == 13) {
+        if (!$(activeTile).hasClass('expanded')) {
+          expand($(activeTile));
+        } else {
+          contract($(activeTile));
+        }
+      }
+
+    }
+
+  });
 
   window.urb.appl = "taskk"
 
