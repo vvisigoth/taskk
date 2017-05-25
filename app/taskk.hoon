@@ -2,31 +2,23 @@
 ::
 ::::  
   ::
-  :: Front End Actions
-  :: - /Create issue
-  :: - /Get all issues
-  :: - edit issue body
-  :: - /edit issue phase
+  :: TODO
   :: - delete issue
   ::
 /?    310
 |%
   ++  card  
-    $%  {$info wire @p toro}             
-        {$diff mark *}
+    $%  {$info wire @p toro}                     :: write to clay
+        {$warp wire sock riff}                   :: watch a dir
+        {$diff mark *}                           :: update subscribers
     ==
   ++  move  {bone card}                          ::
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
-::  write json
 ++  create-issue
-  :: take json from request
   |=  jon/json
-  ~&  %create-issue-called
-  ~&  jon
   ^-  (list move)
-  =|  {pax/path id/@tas ca/card car/card}
   ?.  ?=($o -.jon)
     :: TODO return an error instead 
     [[ost.hid %diff %json ~] ~]
@@ -45,10 +37,9 @@
   =/  aut  ?:  ?=($s -.au)  p.au  ~
   =/  as  (~(got by p.jon) 'assignee')
   =/  ass  ?:  ?=($s -.as)  p.as  ~
-  =.  id  (scot %da now.hid)
-  =.  pax 
-    ::/(scot %tas hi)/=/app/taskk/(scot %tas bi)/(scot %tas phi)/(scot %tas id)/json
-    :: for right now, only write to our urbit
+  =/  id/@tas
+    (scot %da now.hid)
+  =/  pax/path
     %/(scot %tas boa)/(scot %tas pha)/(scot %da now.hid)/md
   =/  txt
     %-  crip
@@ -62,16 +53,22 @@
 
     {(trip des)}
     """
-  =.  ca
+  =/  ca/card
     :^
       %info
       /writing
       our.hid
       (foal pax [%md !>(txt)])
-  :: it would be cool to have a confirmation response move, too
-  ::
-  ::[[ost.hid ca] ~]
-  =.  car  [%diff %json (jobe ~[['action-completed' jon] ['issue-id' (jape (trip id))]])]
+  =/  car/card
+    :+
+      %diff 
+      %json 
+      %-
+        jobe 
+        :~
+          ['action-completed' jon] 
+          ['issue-id' (jape (trip id))]
+        ==
   =/  out
     %+  turn  (prey /sub-path hid)
       |=  {o/bone *}
@@ -82,7 +79,6 @@
 ++  edit-issue
   |=  jon/json
   ^-  (list move)
-  =|  {pax/path ca/card}
   ?.  ?=($o -.jon)
     :: TODO return an error instead 
     [[ost.hid %diff %json ~] ~]
@@ -97,9 +93,9 @@
   =/  phas  ?:  ?=($s -.pha)  p.pha  ~
   =/  des  (~(got by p.jon) 'description')
   =/  desc  ?:  ?=($s -.des)  p.des  ~
-  =.  pax
+  =/  pax/path
     /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phas)/(scot %tas iss)/md
-  =.  ca
+  =/  ca/card
     :^
       %info
       /writing
@@ -107,11 +103,10 @@
       (foal pax [%md !>((scot %tas desc))])
   [[ost.hid ca] ~]
   ::
-::  used for changing board phase
+::  change board phase
 ++  change-phase
   |=  jon/json
   ~&  %change-phase-called
-  =|  {inp/path out/path ca/card}
   ^-  (list move)
   ?.  ?=($o -.jon)
     :: TODO return an error instead 
@@ -127,11 +122,11 @@
   =/  phan  ?:  ?=($s -.phn)  p.phn  ~
   =/  pht  (~(got by p.jon) 'to-phase')
   =/  phat  ?:  ?=($s -.pht)  p.pht  ~
-  =.  inp
+  =/  inp/path
     /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phan)/(scot %tas iss)/md
-  =.  out
+  =/  out/path
     /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phat)/(scot %tas iss)/md
-  =.  ca
+  =/  ca/card
     :^
       %info
       /moving
@@ -144,7 +139,6 @@
 ++  request-board
   |=  jon/json
   ^-  (list move)
-  =|  car/card
   ?.  ?=($o -.jon)
     [[ost.hid %diff %json ~] ~]
   :: map this whole thing
@@ -155,7 +149,7 @@
   =/  hi  ?:  ?=($s -.h)  p.h  ~
   =/  bi  ?:  ?=($s -.b)  p.b  ~
   =/  pax  (create-path [`@t`hi `@t`bi ~ ~])
-  =.  car
+  =/  car/card
     :+
       %diff
       %json
@@ -164,7 +158,7 @@
     |=  {o/bone *}
     [o car]
 ::
-::  request an issue
+::  create a path
 ++  create-path
   |=  {host/@t board/@t phase/(unit @t) issue/(unit @t)}
   :: there's no circumstance where there's an issue w/out phase, so maybe make these one 
@@ -176,18 +170,15 @@
 ::
 ++  poke-json
   |=  jin/json
-  ~&  %poke-json
-  ~&  jin
   ^-  (quip move +>.$)
-  =|  {jout/json mo/(list move)}
   ?.  ?=($o -.jin)
     ~&(%whoops !!)
-    :::_  +>.$
       ::[ost.hid (joba 'error' (jape "problem"))]
   =/  a  (~(got by p.jin) 'action')
   =/  act  ?:  ?=($s -.a)  p.a  ~
   :: logic here to determine which action is being requested
-  =.  mo
+  :: TODO use case here?
+  =/  mo/(list move)
     ?:  =(act 'create-issue')
       (create-issue jin)
       ?:  =(act 'change-phase')  
