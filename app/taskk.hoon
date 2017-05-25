@@ -202,15 +202,50 @@
   =+  txt=.^(@t cx+pax)
   :: leaves should be a different data structure
   [%s txt]
-::  subscribe to taskk
+::
+::  json string util
+++  json-to-string
+  |=  {jon/json klis/(list @tas)}
+  ^-  (map @tas @tas)
+  ~
+
+::  subscribe to taskk front end
 ::
 ++  peer-sub-path
   |=  arg/*
-  =|  jon/json
-  =.  jon
+  =/  jon/json
     %+
       joba 
       'connected'
       (jape "success")
   [[[ost.hid %diff %json jon] ~] +>.$]
+::
+::  watch board dir for changes
+++  watch-dir
+  |=  {a/path cas/@ud kas/@ud}
+  ^-  (quip move +>.$)
+  =/  mot/moat
+    :+
+      [%ud cas]
+      [%ud kas]
+      a
+  =/  soc/sock
+    [our.hid our.hid]
+  =/  rav/rave
+    [%many | mot]
+  =/  rif/riff
+    [%home [~ rav]]
+  =/  car/card
+    :^
+      %warp
+      /sync
+      soc
+      rif
+  [[[ost.hid car] ~] +>.$]
+:: accepts incoming writ
+++  writ                                         
+  |=  {way/wire rot/riot}
+  ~&  [%way way]
+  ~&  [%rot rot]
+  [~ +>.$]
 --
