@@ -13,45 +13,40 @@
         {$diff mark *}                           :: update subscribers
     ==
   ++  move  {bone card}                          ::
+  ++  issu  
+    $:  
+      hos/(unit json) 
+      boa/(unit json) 
+      pha/(unit json) 
+      iss/(unit json) 
+      tit/(unit json) 
+      des/(unit json) 
+      aut/(unit json) 
+      ass/(unit json)
+    ==
+    ::
 --                                               ::
 !:                                               ::
 |_  {hid/bowl state/$~}                          ::
 ++  create-issue
   |=  jon/json
   ^-  (list move)
-  ?.  ?=($o -.jon)
-    :: TODO return an error instead 
-    [[ost.hid %diff %json ~] ~]
-    ::
-  =/  ho  (~(got by p.jon) 'host')
-  =/  hos  ?:  ?=($s -.ho)  p.ho  ~
-  =/  bo  (~(got by p.jon) 'board')
-  =/  boa  ?:  ?=($s -.bo)  p.bo  ~
-  =/  ph  (~(got by p.jon) 'phase')
-  =/  pha  ?:  ?=($s -.ph)  p.ph  ~
-  =/  ti  (~(got by p.jon) 'title')
-  =/  tit  ?:  ?=($s -.ti)  p.ti  ~
-  =/  de  (~(got by p.jon) 'description')
-  =/  des  ?:  ?=($s -.de)  p.de  ~
-  =/  au  (~(got by p.jon) 'author')
-  =/  aut  ?:  ?=($s -.au)  p.au  ~
-  =/  as  (~(got by p.jon) 'assignee')
-  =/  ass  ?:  ?=($s -.as)  p.as  ~
+  =/  pj/issu  (proc-json jon)
   =/  id/@tas
     (scot %da now.hid)
   =/  pax/path
-    %/(scot %tas boa)/(scot %tas pha)/(scot %da now.hid)/md
+    %/(scot %tas (jtape boa.pj))/(scot %tas (jtape pha.pj))/(scot %da now.hid)/md
   =/  txt
     %-  crip
     """
     ---
-    author: {<aut>}
-    assignee: {<ass>}
-    title: {<tit>}
+    author: {<aut.pj>}
+    assignee: {<ass.pj>}
+    title: {<tit.pj>}
     ---
-    #{(trip tit)}
+    #{<tit.pj>}
 
-    {(trip des)}
+    {<des.pj>}
     """
   =/  ca/card
     :^
@@ -70,7 +65,7 @@
           ['issue-id' (jape (trip id))]
         ==
   =/  out
-    %+  turn  (prey /sub-path hid)
+    %+  turn  (prey `path`/(scot %tas (jtape hos.pj))/(scot %tas (jtape boa.pj)) hid)
       |=  {o/bone *}
       [o car]
   (welp out ~[[ost.hid ca]])
@@ -79,28 +74,16 @@
 ++  edit-issue
   |=  jon/json
   ^-  (list move)
-  ?.  ?=($o -.jon)
-    :: TODO return an error instead 
-    [[ost.hid %diff %json ~] ~]
-    ::
-  =/  ho  (~(got by p.jon) 'host')
-  =/  hos  ?:  ?=($s -.ho)  p.ho  ~
-  =/  bo  (~(got by p.jon) 'board')
-  =/  boa  ?:  ?=($s -.bo)  p.bo  ~
-  =/  is  (~(got by p.jon) 'issue')
-  =/  iss  ?:  ?=($s -.is)  p.is  ~
-  =/  pha  (~(got by p.jon) 'phase')
-  =/  phas  ?:  ?=($s -.pha)  p.pha  ~
-  =/  des  (~(got by p.jon) 'description')
-  =/  desc  ?:  ?=($s -.des)  p.des  ~
+  =/  pj/issu  (proc-json jon)
   =/  pax/path
-    /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phas)/(scot %tas iss)/md
+    /(scot %tas (jtape hos.pj))/home/(scot %da now.hid)/app/taskk/(scot %tas (jtape boa.pj))/(scot %tas (jtape pha.pj))/(scot %tas (jtape iss.pj))/md
+
   =/  ca/card
     :^
       %info
       /writing
       our.hid
-      (foal pax [%md !>((scot %tas desc))])
+      (foal pax [%md !>((scot %tas (jtape des.pj)))])
   [[ost.hid ca] ~]
   ::
 ::  change board phase
@@ -109,23 +92,17 @@
   ~&  %change-phase-called
   ^-  (list move)
   ?.  ?=($o -.jon)
-    :: TODO return an error instead 
     [[ost.hid %diff %json ~] ~]
     ::
-  =/  ho  (~(got by p.jon) 'host')
-  =/  hos  ?:  ?=($s -.ho)  p.ho  ~
-  =/  bo  (~(got by p.jon) 'board')
-  =/  boa  ?:  ?=($s -.bo)  p.bo  ~
-  =/  is  (~(got by p.jon) 'issue')
-  =/  iss  ?:  ?=($s -.is)  p.is  ~
+  =/  pj/issu  (proc-json jon)
   =/  phn  (~(got by p.jon) 'from-phase')
   =/  phan  ?:  ?=($s -.phn)  p.phn  ~
   =/  pht  (~(got by p.jon) 'to-phase')
   =/  phat  ?:  ?=($s -.pht)  p.pht  ~
   =/  inp/path
-    /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phan)/(scot %tas iss)/md
+    /(scot %tas (jtape hos.pj))/home/(scot %da now.hid)/app/taskk/(scot %tas (jtape boa.pj))/(scot %tas phan)/(scot %tas (jtape iss.pj))/md
   =/  out/path
-    /(scot %tas hos)/home/(scot %da now.hid)/app/taskk/(scot %tas boa)/(scot %tas phat)/(scot %tas iss)/md
+    /(scot %tas (jtape hos.pj))/home/(scot %da now.hid)/app/taskk/(scot %tas (jtape boa.pj))/(scot %tas phat)/(scot %tas (jtape iss.pj))/md
   =/  ca/card
     :^
       %info
@@ -139,25 +116,53 @@
 ++  request-board
   |=  jon/json
   ^-  (list move)
+  =/  pj  (proc-json jon)
   ?.  ?=($o -.jon)
     [[ost.hid %diff %json ~] ~]
-  :: map this whole thing
-  :: list of keys
-  :: map of keys and values
-  =/  h  (~(got by p.jon) 'host')
-  =/  b  (~(got by p.jon) 'board')
-  =/  hi  ?:  ?=($s -.h)  p.h  ~
-  =/  bi  ?:  ?=($s -.b)  p.b  ~
-  =/  pax  (create-path [`@t`hi `@t`bi ~ ~])
+  =/  pax  (create-path [`@t`(jtape hos.pj) `@t`(jtape boa.pj) ~ ~])
   =/  car/card
     :+
       %diff
       %json
       (crawl-path pax)
-  %+  turn  (prey /sub-path hid)
+  %+  turn  (prey `path`/(scot %tas (jtape hos.pj))/(scot %tas (jtape boa.pj)) hid)
     |=  {o/bone *}
     [o car]
 ::
+::  process json string
+++  jtape
+  |=   a/(unit json)  
+    ?~  a 
+      ~ 
+      ?:  ?=($s -.u.a)  
+        p.u.a
+        ~
+
+::  process json
+++  proc-json
+  |=  jon/json
+  ^-  issu
+  ?.  ?=($o -.jon)
+    [~ ~ ~ ~ ~ ~ ~ ~]
+  =/  ho  (~(get by p.jon) 'host')
+  =/  bo  (~(get by p.jon) 'board')
+  =/  ph  (~(get by p.jon) 'phase')
+  =/  ti  (~(get by p.jon) 'title')
+  =/  de  (~(get by p.jon) 'description')
+  =/  au  (~(get by p.jon) 'author')
+  =/  is  (~(get by p.jon) 'issue')
+  =/  as  (~(get by p.jon) 'assignee')
+  :*
+    ho 
+    bo 
+    ph 
+    is 
+    ti 
+    de 
+    au 
+    as
+  ==
+
 ::  create a path
 ++  create-path
   |=  {host/@t board/@t phase/(unit @t) issue/(unit @t)}
@@ -203,16 +208,11 @@
   :: leaves should be a different data structure
   [%s txt]
 ::
-::  json string util
-++  json-to-string
-  |=  {jon/json klis/(list @tas)}
-  ^-  (map @tas @tas)
-  ~
-
 ::  subscribe to taskk front end
 ::
-++  peer-sub-path
-  |=  arg/*
+++  peer
+  |=  pax/path
+  ~&  [%subscribed-to pax]
   =/  jon/json
     %+
       joba 
