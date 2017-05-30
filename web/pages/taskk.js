@@ -472,7 +472,7 @@ $(function() {
 
   window.urb.appl = "taskk"
 
-  window.urb.bind('/sub-path',
+  window.urb.bind('/' + HOST + '/' + BOARD,
     function(err,dat) {
 
       console.debug("on sub path");
