@@ -222,30 +222,25 @@
 ::
 ::  watch board dir for changes
 ++  watch-dir
-  |=  {a/path cas/@ud kas/@ud}
+  |=  a/path
   ^-  (quip move +>.$)
-  =/  mot/moat
-    :+
-      [%ud cas]
-      [%ud kas]
-      a
   =/  soc/sock
     [our.hid our.hid]
   =/  rav/rave
-    [%many | mot]
+    [%next %z da+now.hid a]
   =/  rif/riff
     [%home [~ rav]]
   =/  car/card
     :^
       %warp
-      /sync
+      a
       soc
       rif
   [[[ost.hid car] ~] +>.$]
+::
 :: accepts incoming writ
 ++  writ                                         
   |=  {way/wire rot/riot}
-  ~&  [%way way]
   ~&  [%rot rot]
-  [~ +>.$]
+  [(watch-dir way) +>.$]
 --
