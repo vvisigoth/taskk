@@ -40,13 +40,13 @@
     %-  crip
     """
     ---
-    author: {<aut.pj>}
-    assignee: {<ass.pj>}
-    title: {<tit.pj>}
+    author: {<(jtape aut.pj)>}
+    assignee: {<(jtape ass.pj)>}
+    title: {<(jtape tit.pj)>}
     ---
-    #{<tit.pj>}
+    #{<(trip (jtape tit.pj))>}
 
-    {<des.pj>}
+    {<(trip (jtape des.pj))>}
     """
   =/  ca/card
     :^
