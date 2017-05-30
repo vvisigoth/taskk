@@ -43,9 +43,9 @@ first (weirdly).
 - [ ] update front end on issue creation
 - [ ] subscribe app to proper dir
 - [ ] back end for delete
-+ [ ] New issubscriptions
 + [ ] issue subscriptions
 - [ ] refactor js
+- [ ] react
 - [ ] refactor hoon
 
 ## Bugs
