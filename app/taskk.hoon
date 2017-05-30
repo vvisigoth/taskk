@@ -35,7 +35,7 @@
   =/  id/@tas
     (scot %da now.hid)
   =/  pax/path
-    %/(scot %tas (jtape boa.pj))/(scot %tas (jtape pha.pj))/(scot %da now.hid)/md
+    /(scot %p our.hid)/home/(scot %da now.hid)/app/taskk/(scot %tas (jtape hos.pj))/(scot %tas (jtape boa.pj))/(scot %tas (jtape pha.pj))/(scot %da now.hid)/md
   =/  txt
     %-  crip
     """
@@ -76,7 +76,7 @@
   ^-  (list move)
   =/  pj/issu  (proc-json jon)
   =/  pax/path
-    /(scot %tas (jtape hos.pj))/home/(scot %da now.hid)/app/taskk/(scot %tas (jtape boa.pj))/(scot %tas (jtape pha.pj))/(scot %tas (jtape iss.pj))/md
+    /(scot %p our.hid)/home/(scot %da now.hid)/app/taskk/(scot %tas (jtape hos.pj))/(scot %tas (jtape boa.pj))/(scot %tas (jtape pha.pj))/(scot %tas (jtape iss.pj))/md
 
   =/  ca/card
     :^
@@ -100,9 +100,31 @@
   =/  pht  (~(got by p.jon) 'to-phase')
   =/  phat  ?:  ?=($s -.pht)  p.pht  ~
   =/  inp/path
-    /(scot %tas (jtape hos.pj))/home/(scot %da now.hid)/app/taskk/(scot %tas (jtape boa.pj))/(scot %tas phan)/(scot %tas (jtape iss.pj))/md
+    :~
+      (scot %p our.hid)
+      %home
+      (scot %da now.hid)
+      %app
+      %taskk
+      (scot %tas (jtape hos.pj))
+      (scot %tas (jtape boa.pj))
+      (scot %tas phan)
+      (scot %tas (jtape iss.pj))
+      %md
+    ==
   =/  out/path
-    /(scot %tas (jtape hos.pj))/home/(scot %da now.hid)/app/taskk/(scot %tas (jtape boa.pj))/(scot %tas phat)/(scot %tas (jtape iss.pj))/md
+    :~
+      (scot %p our.hid)
+      %home
+      (scot %da now.hid)
+      %app
+      %taskk
+      (scot %tas (jtape hos.pj))
+      (scot %tas (jtape boa.pj))
+      (scot %tas phat)
+      (scot %tas (jtape iss.pj))
+      %md
+    ==
   =/  ca/card
     :^
       %info
@@ -166,12 +188,29 @@
 ::  create a path
 ++  create-path
   |=  {host/@t board/@t phase/(unit @t) issue/(unit @t)}
-  :: there's no circumstance where there's an issue w/out phase, so maybe make these one 
-  :: data structure? phiss?
   ^-  path
   ?~  phase
-    /(scot %tas host)/home/(scot %da now.hid)/app/taskk/(scot %tas board)
-  /(scot %tas host)/home/(scot %da now.hid)/app/taskk/(scot %tas board)/(scot %tas (need phase))/(scot %tas (need issue))/md
+    :~
+      (scot %p our.hid)
+      %home
+      (scot %da now.hid)
+      %app
+      %taskk
+      (scot %tas host)
+      (scot %tas board)
+    ==
+  :~
+    (scot %p our.hid)
+    %home
+    (scot %da now.hid)
+    %app
+    %taskk
+    (scot %tas host)
+    (scot %tas board)
+    (scot %tas (need phase))
+    (scot %tas (need issue))
+    %md
+  ==
 ::
 ++  poke-json
   |=  jin/json
