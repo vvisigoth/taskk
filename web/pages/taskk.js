@@ -120,9 +120,10 @@ $(function() {
       'description': 'Describe issue here',
       'author': '~' + window.urb.user,
       'assignee': '~' + window.urb.user
-  }, function(d) {
+  }, function(d, x) {
     console.debug('new issue callback');
     console.debug(d);
+    console.debug(x);
   })
   };
 
@@ -158,6 +159,9 @@ $(function() {
       'author': dobj['author'],
       'assignee': dobj['assignee']
     });
+
+    $('#empty-message').css('display', 'none');
+
     return assignTileSize(a, dobj['description']);
   };
 
@@ -494,7 +498,6 @@ $(function() {
         $($('.tile')[0]).addClass('active');
 
       } else if (dat.data.length == 0) {
-        k
         // Start a new board!
         $('#empty-message').text("looks like there's no board here. create issues to start one.");
       }
