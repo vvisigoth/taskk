@@ -27,7 +27,7 @@
     ::
 --                                               ::
 !:                                               ::
-|_  {hid/bowl state/$~}                          ::
+|_  {hid/bowl subp/path}                         ::
 ++  create-issue
   |=  jon/json
   ^-  (list move)
@@ -65,7 +65,7 @@
           ['issue-id' (jape (trip id))]
         ==
   =/  out
-    %+  turn  (prey `path`/(scot %tas (jtape hos.pj))/(scot %tas (jtape boa.pj)) hid)
+    %+  turn  (prey subp hid)
       |=  {o/bone *}
       [o car]
   (welp out ~[[ost.hid ca]])
@@ -147,7 +147,7 @@
       %diff
       %json
       (crawl-path pax)
-  %+  turn  (prey `path`/(scot %tas (jtape hos.pj))/(scot %tas (jtape boa.pj)) hid)
+  %+  turn  (prey subp hid)
     |=  {o/bone *}
     [o car]
 ::
@@ -252,17 +252,20 @@
 ++  peer
   |=  pax/path
   ~&  [%subscribed-to pax]
+  =/  lism/(list move)
+    (watch-dir (welp /app/taskk pax))
   =/  jon/json
     %+
       joba 
       'connected'
       (jape "success")
-  [[[ost.hid %diff %json jon] ~] +>.$]
+  [(welp lism [[ost.hid %diff %json jon] ~]) +>.$(subp pax)]
 ::
 ::  watch board dir for changes
 ++  watch-dir
   |=  a/path
-  ^-  (quip move +>.$)
+  ~&  [%watch-dir a]
+  ^-  (list move)
   =/  soc/sock
     [our.hid our.hid]
   =/  rav/rave
@@ -275,11 +278,27 @@
       a
       soc
       rif
-  [[[ost.hid car] ~] +>.$]
+  [[ost.hid car] ~]
+::
 ::
 :: accepts incoming writ
 ++  writ                                         
   |=  {way/wire rot/riot}
   ~&  [%rot rot]
-  [(watch-dir way) +>.$]
+  =/  car/card
+    :+
+      %diff
+      %json
+      %+
+        joba
+        'updated'
+        (jape "true")
+  :-
+    %+  welp
+      %+  turn  (prey subp hid)
+        |=  {o/bone *}
+        [o car]
+      (watch-dir way)
+    +>.$
 --
+::
