@@ -85,6 +85,38 @@
       (foal pax [%md !>((scot %tas (jtape des.pj)))])
   [[ost.hid ca] ~]
   ::
+::  delete issue
+++  delete-issue
+  |=  jon/json
+  ~&  %delete-issue-called
+  ^-  (list move)
+  ?.  ?=($o -.jon)
+    [[ost.hid %diff %json ~] ~]
+    ::
+  =/  pj/issu  (proc-json jon)
+  =/  phn  (~(got by p.jon) 'phase')
+  =/  phan  ?:  ?=($s -.phn)  p.phn  ~
+  =/  inp/path
+    :~
+      (scot %p our.hid)
+      %home
+      (scot %da now.hid)
+      %app
+      %taskk
+      (scot %tas (jtape hos.pj))
+      (scot %tas (jtape boa.pj))
+      (scot %tas phan)
+      (scot %tas (jtape iss.pj))
+      %md
+    ==
+  =/  ca/card
+    :^
+      %info
+      /deleting
+      our.hid
+      (fray inp)
+  [[ost.hid ca] ~]
+::
 ::  change board phase
 ++  change-phase
   |=  jon/json
