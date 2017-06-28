@@ -24,12 +24,14 @@ submodule has been properly dl-ed by running `git submodule update --init --recu
 the front-end on your ship.
 
 ## User stories
-+ I want to start a board
-+ I want to add an issue to an existing board
-+ I want to subscribe to a board
-+ I want to assign an issue to someone else (v2)
-+ I want to join an existing board
-+ I want to be updated when a board I subscribe to updates
++ start a board
++ edit an issue
++ delete an issue
++ add an issue to an existing board
++ subscribe to a board
++ assign an issue to someone else 
++ join an existing board
++ be updated when a board I subscribe to updates
 
 ## TODO
 - [x] Create new board
