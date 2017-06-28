@@ -1,0 +1,3 @@
+[submodule "taskk-ui"]
+	path = taskk-ui
+	url = git@github.com:vvisigoth/taskk-ui.git
