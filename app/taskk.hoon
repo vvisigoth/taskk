@@ -262,8 +262,8 @@
       ::[ost.hid (joba 'error' (jape "problem"))]
   =/  a  (~(got by p.jin) 'action')
   =/  act  ?:  ?=($s -.a)  p.a  ~
-  :: logic here to determine which action is being requested
-  :: TODO use case here?
+  :: logic to determine which action is being requested
+  :: TODO use switch/case here
   =/  mo/(list move)
     ?:  =(act 'create-issue')
       (create-issue jin)
@@ -330,20 +330,20 @@
 ++  writ                                         
   |=  {way/wire rot/riot}
   ~&  [%rot rot]
-  =/  car/card
-    :+
-      %diff
-      %json
-      %+
-        joba
-        'updated'
-        (jape "true")
-  :-
-    %+  welp
-      %+  turn  (prey subp hid)
-        |=  {o/bone *}
-        [o car]
-      (watch-dir way)
-    +>.$
+  ::  will update subscribers that node changed
+  ::  once that works reasonably
+  ::=/  car/card
+  ::  :+
+  ::    %diff
+  ::    %json
+  ::    %+
+  ::      joba
+  ::      'updated'
+  ::      (jape "true")
+  :::-
+  ::  %+  welp
+  ::    %+  turn  (prey subp hid)
+  ::      |=  {o/bone *}
+  ::      [o car]
+  [(watch-dir way) +>.$]
 --
-::
