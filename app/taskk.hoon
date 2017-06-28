@@ -44,9 +44,7 @@
     assignee: {<(jtape ass.pj)>}
     title: {<(jtape tit.pj)>}
     ---
-    #{<(trip (jtape tit.pj))>}
-
-    {<(trip (jtape des.pj))>}
+    {<(jtape des.pj)>}
     """
   =/  ca/card
     :^
