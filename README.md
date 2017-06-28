@@ -2,6 +2,8 @@
 
 *Manage issues on Urbit*
 
+<img src="http://i.imgur.com/lvsnIlT.png" width="100%"/>
+
 ## Design considerations
 
 Will use clay as our shared state. This will allow multiple users to sync issues, 
@@ -13,9 +15,13 @@ a wrapper around clay to enforce rules, etc.
 
 Any large-scale edits should be done in vim or a similar editor.
 
-Ideally, everything should be accessible from command line, preferably as a 
-:talk-like console app. Probably would be easier to get a web interface going 
-first (weirdly).
+## Install
+1. Copy /app/taskk.hoon to `%/app/taskk.hoon` on your ship
+2. Run `|start %taskk`. *Note* This only needs to be done once.
+3. Install taskk-ui, which is included as a git submodule. Make sure that the 
+submodule has been properly dl-ed by running `git submodule update --init --recursive`
+4. Follow [instructions](https://github.com/vvisigoth/taskk-ui) to install and run 
+the front-end on your ship.
 
 ## User stories
 + I want to start a board
@@ -25,28 +31,16 @@ first (weirdly).
 + I want to join an existing board
 + I want to be updated when a board I subscribe to updates
 
-## Issue format
-+ Board
-+ Title
-+ Issue uuid
-+ Body text (md)
-+ Author
-+ Subscribers?
-+ Assignee
-+ Phase
-
-## Dev "plan"
+## TODO
 - [x] Create new board
 - [x] Create new issue
 - [x] Change issue phase
 - [x] Change assignee
-- [ ] update front end on issue creation
-- [ ] subscribe app to proper dir
-- [ ] back end for delete
-+ [ ] issue subscriptions
-- [ ] refactor js
-- [ ] react
+- [x] update front end on issue creation
+- [ ] update front end when issue has been edited from back end
+- [x] back end for delete
++ [ ] notify assignee on change
+- [x] refactor js
+- [x] react
 - [ ] refactor hoon
-
-## Bugs
 
