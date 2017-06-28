@@ -59,8 +59,9 @@
       %-
         jobe 
         :~
-          ['action-completed' jon] 
+          ['action-completed' (jape "create-issue")] 
           ['issue-id' (jape (trip id))]
+          ['response-data' jon]
         ==
   =/  out
     %+  turn  (prey subp hid)
@@ -144,7 +145,12 @@
     :+
       %diff
       %json
-      (crawl-path pax)
+      %-
+        jobe
+        :~
+          ['action-completed' (jape "request-board")]
+          ['response-data' (crawl-path pax)]
+        ==
   %+  turn  (prey subp hid)
     |=  {o/bone *}
     [o car]
@@ -227,6 +233,8 @@
         (change-phase jin)
         ?:  =(act 'edit-issue')  
           (edit-issue jin)
+          ?:  =(act 'delete-issue')  
+            (delete-issue jin)
         (request-board jin)
   :_  +>.$
   mo
@@ -253,10 +261,11 @@
   =/  lism/(list move)
     (watch-dir (welp /app/taskk pax))
   =/  jon/json
-    %+
-      joba 
-      'connected'
-      (jape "success")
+    %-
+      jobe 
+      :~
+        ['action-completed' (jape "connect")]
+      ==
   [(welp lism [[ost.hid %diff %json jon] ~]) +>.$(subp pax)]
 ::
 ::  watch board dir for changes
