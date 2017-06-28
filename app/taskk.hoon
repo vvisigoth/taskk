@@ -248,6 +248,12 @@
     %md
   ==
 ::
+::  for testing watch
+++  poke-path
+  |=  p/path
+  ^-  (list move)
+  (watch-dir p)
+::
 ++  poke-json
   |=  jin/json
   ^-  (quip move +>.$)
